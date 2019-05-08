@@ -7,7 +7,7 @@ import {
     up: (queryInterface: QueryInterface, Sequelize: SequelizeStatic) => {
       return queryInterface.bulkInsert('user', [{
         user_id: "78987653456789098",
-        name: "User Amazon A",
+        name: "User Microsoft A",
         date_update: new Date(),
       }], {});
     },
