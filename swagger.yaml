@@ -1,0 +1,419 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Test my chatbot API
+  license:
+    name: MIT
+servers:
+  - url: http://api.test-my-chatbot.com/
+
+paths:
+
+  /coins:
+    get:
+      summary: List all coins
+      operationId: getCoins
+      parameters:
+        - name: limit
+          in: query
+          description: How many items to return at one time (max 100)
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: offset
+          in: query
+          description: Rank of the first coin to retrieve (0 for BTC)
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: An array of cryptocurrencies
+          content:
+            application/json:    
+              schema:
+                $ref: "#/components/schemas/Coins"
+
+  /coins/details:
+    get:
+      summary: List all coins with details
+      operationId: getCoinsDetails
+      parameters:
+        - name: limit
+          in: query
+          description: How many items to return at one time (max 100)
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: offset
+          in: query
+          description: Rank of the first coin to retrieve (0 for BTC)
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CoinsDetails"
+
+  /coins/{sym}/general:
+    get:
+      summary: General infos for a specific coin
+      operationId: getGeneralBySym
+      parameters:
+        - name: sym
+          in: path
+          required: true
+          description: The symbol of the cryptocurrency
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GeneralInformations"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /coins/{sym}/links:
+    get:
+      summary: Useful links for a specific coin
+      operationId: getLinksBySym
+      parameters:
+        - name: sym
+          in: path
+          required: true
+          description: The symbol of the cryptocurrency
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Links"
+
+  /coins/{sym}/social/twitter:
+    get:
+      summary: Twitter messages for a specific coin (50 tweets)
+      operationId: getSocialTwitterBySym
+      parameters:
+        - name: sym
+          in: path
+          required: true
+          description: The symbol of the cryptocurrency
+          schema:
+            type: string
+        - name: offset
+          in: query
+          description: 0 is for the first 50 tweets, 1 is for 50 to 100, etc.
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Twitter"
+
+  /coins/{sym}/social/reddit:
+    get:
+      summary: Reddit posts for a specific coin (50 posts)
+      operationId: getSocialTwitterBySym
+      parameters:
+        - name: sym
+          in: path
+          required: true
+          description: The symbol of the cryptocurrency
+          schema:
+            type: string
+        - name: offset
+          in: query
+          description: 0 is for the first 50 posts, 1 is for 50 to 100, etc.
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Reddit"
+
+  /coins/{sym}/events:
+    get:
+      summary: Incoming events for a specific coin
+      operationId: getEventsBySym
+      parameters:
+        - name: sym
+          in: path
+          required: true
+          description: The symbol of the cryptocurrency
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Events"
+
+  /coins/{sym}/markets:
+    get:
+      summary: Marketplaces for a specific coin
+      operationId: getMarketsBySym
+      parameters:
+        - name: sym
+          in: path
+          required: true
+          description: The symbol of the cryptocurrency
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Markets"
+
+components:
+  schemas:
+    Changes24h:
+      required:
+        - dollar
+        - btc
+      properties:
+        dollar:
+          type: number
+          format: double
+        btc:
+          type: number
+          format: double
+
+    Coin:
+      required:
+        - rank
+        - name
+        - change24h
+      properties:
+        rank:
+          type: integer
+          format: int32
+        name:
+          type: string
+        change24h:
+          type: integer
+          format: int32
+
+    Coins:
+      type: array
+      items:
+        $ref: "#/components/schemas/Coin"
+
+    CoinsDetails:
+      type: array
+      items:
+        $ref: "#/components/schemas/GeneralInformations"    
+
+    Error:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+
+    Events:
+      required:
+        - events
+      properties:
+        events:
+          type: array
+          items:
+            type: string     
+
+    GeneralInformations:
+      required:
+        - rank
+        - name
+        - prices
+        - market_cap
+        - volume24h
+        - change24h
+        - nb_markets
+        - all_time
+        - year
+        - resume
+        - website
+        - image_url
+      properties:
+        rank:
+          type: integer
+          format: int32
+        name:
+          type: string
+        prices:
+          $ref: "#/components/schemas/Prices"
+        market_cap:
+          type: number
+          format: double
+        volume24h:
+          $ref: "#/components/schemas/Volumes24h"
+        change24h:
+          $ref: "#/components/schemas/Changes24h"
+        markets:
+          $ref: "#/components/schemas/MarketsInfo"
+        supply:
+          type: integer
+          format: int64
+        all_time:
+          type: object
+          properties:
+            lower:
+              $ref: "#/components/schemas/Prices"
+            higher:
+              $ref: "#/components/schemas/Prices"
+        year:
+          type: object
+          properties:
+            lower:
+              $ref: "#/components/schemas/Prices"
+            higher:
+              $ref: "#/components/schemas/Prices"
+        resume:
+          type: string
+        website:
+          type: string
+        image_url:
+          type: string
+
+    Links:
+      required:
+        - whitepaper
+        - image_url
+        - trading_view_analysis
+        - website
+        - github
+        - twitter
+        - facebook
+        - telegram
+        - reddit
+      properties:
+        whitepaper:
+          type: string
+        image_url:
+          type: string
+        trading_view_analysis:
+          type: string
+        website:
+          type: string
+        github:
+          type: string
+        twitter:
+          type: string
+        facebook:
+          type: string
+        telegram:
+          type: string
+        reddit:
+          type: string
+
+    Markets:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+            format: int32
+          name:
+            type: string
+          website_url:
+            type: string
+          image_url:
+            type: string
+          volume24h:
+            type: integer
+            format: int32
+            description: Percent of volume for this plateform
+
+    MarketsInfo:
+      required:
+        - nb_markets
+        - volume_biggest
+      properties:
+        nb_markets:
+          type: integer
+          format: int32
+        volume_biggest:
+          $ref: "#/components/schemas/Volumes24h"
+
+    Prices:
+      required:
+        - dollar
+        - btc
+      properties:
+        dollar:
+          type: number
+          format: double
+        btc:
+          type: number
+          format: double
+
+    Reddit:
+      required:
+        - reddit
+      properties:
+        reddit:
+          type: array
+          items:
+            type: object
+            description: Reddit post format
+
+    Twitter:
+      required:
+        - account_name
+        - tweets
+      properties:
+        account_name:
+          type: string
+        tweets:
+          type: array
+          items:
+            type: string
+    
+    Volumes24h:
+      required:
+        - dollar
+        - btc
+      properties:
+        dollar:
+          type: number
+          format: double
+        btc:
+          type: number
+          format: double
