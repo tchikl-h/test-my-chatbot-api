@@ -6,7 +6,6 @@ import CompanyModel from "../../models/company";
 * url : http://localhost:8080/v1/companies {"companyName": "Apple", "companyDescription": "Awesome Description"}
 */
 export default function postCompanies(req: Request, res: Response, next: NextFunction) {
-    console.log(req.body);
     CompanyModel.create({
         name: req.body.companyName,
         description: req.body.companyDescription,

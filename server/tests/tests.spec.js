@@ -233,6 +233,25 @@ describe('test-my-chatbot API', function() {
                 const res = await chai.request(server).post('/v1/companies')
                 .type('form')
                 .send({
+                    'companyName': 'Apple to patch',
+                    'companyDescription': 'Awesome description to patch'
+                })
+                res.should.have.status(200);
+            } catch (err) {
+                throw err;
+            }
+        });
+
+        it('[patchCompanies] it should PATCH a company (200)', async () => {
+            try {
+                const getRes = await chai.request(server).get('/v1/companies')
+                const newCompanyName = getRes.body.filter((company) => {
+                    if (company.name === 'Apple to patch')
+                        return company;
+                })
+                const res = await chai.request(server).patch(`/v1/companies/${newCompanyName[0].id}`)
+                .type('form')
+                .send({
                     'companyName': 'Apple',
                     'companyDescription': 'Awesome description'
                 })
@@ -262,7 +281,7 @@ describe('test-my-chatbot API', function() {
             }
         });
 
-        it('[postChatbots] it should POST a company (200)', async () => {
+        it('[postChatbots] it should POST a chatbot (200)', async () => {
             try {
                 const getRes = await chai.request(server).get('/v1/companies')
                 const newCompanyName = getRes.body.filter((company) => {
@@ -270,6 +289,36 @@ describe('test-my-chatbot API', function() {
                         return company;
                 })
                 const res = await chai.request(server).post('/v1/chatbots')
+                .type('form')
+                .send({
+                    "projectName": "Chatbot Apple A to patch", 
+                    "description": "Awesome Description to patch", 
+                    "containerMode": "Dialogflow to patch", 
+                    "dialogflowProjectId": 5678987655, 
+                    "dialogflowClientEmail": "apple@hotmail.fr to patch",
+                    "dialogflowPrivateKey": "UY9J8F8EZ7D8D687ZJYEF98Y to patch", 
+                    "companyId": newCompanyName[0].id
+                })
+                res.should.have.status(200);
+            } catch (err) {
+                throw err;
+            }
+        });
+
+        it('[patchChatbots] it should PATCH a company (200)', async () => {
+            try {
+                let getRes = await chai.request(server).get('/v1/companies')
+                const newCompanyName = getRes.body.filter((company) => {
+                    if (company.name === 'Apple')
+                        return company;
+                })
+
+                getRes = await chai.request(server).get('/v1/chatbots')
+                const newChatbot = getRes.body.filter((chatbot) => {
+                    if (chatbot.project_name === 'Chatbot Apple A to patch')
+                        return chatbot;
+                })
+                const res = await chai.request(server).patch(`/v1/chatbots/${newChatbot[0].id}`)
                 .type('form')
                 .send({
                     "projectName": "Chatbot Apple A", 
@@ -324,6 +373,40 @@ describe('test-my-chatbot API', function() {
                 const res = await chai.request(server).post('/v1/users')
                 .type('form')
                 .send({
+                    "name": "User Apple A to patch",
+                    "chatbotIds": JSON.stringify(chatbotIds),
+                    "companyId": newCompanyName[0].id
+                })
+                res.should.have.status(200);
+            } catch (err) {
+                throw err;
+            }
+        });
+
+        it('[patchUsers] it should PATCH a user (200)', async () => {
+            try {
+                let getRes = await chai.request(server).get('/v1/companies')
+                const newCompanyName = getRes.body.filter((company) => {
+                    if (company.name === 'Apple')
+                        return company;
+                })
+
+                getRes = await chai.request(server).get('/v1/chatbots')
+                const newChatbot = getRes.body.filter((chatbot) => {
+                    if (chatbot.project_name === 'Chatbot Apple A')
+                        return chatbot;
+                })
+
+                getRes = await chai.request(server).get('/v1/users')
+                const newUser = getRes.body.filter((user) => {
+                    if (user.name === 'User Apple A to patch')
+                        return user;
+                })
+                let chatbotIds = [];
+                chatbotIds.push(newChatbot[0].id);
+                const res = await chai.request(server).patch(`/v1/users/${newUser[0].id}`)
+                .type('form')
+                .send({
                     "name": "User Apple A",
                     "chatbotIds": JSON.stringify(chatbotIds),
                     "companyId": newCompanyName[0].id
@@ -362,6 +445,32 @@ describe('test-my-chatbot API', function() {
                         return chatbot;
                 })
                 const res = await chai.request(server).post('/v1/tests')
+                .type('form')
+                .send({
+                    "name": "Test 1 Apple to patch", 
+                    "description": "description to patch", 
+                    "chatbotId": newChatbot[0].id
+                })
+                res.should.have.status(200);
+            } catch (err) {
+                throw err;
+            }
+        });
+
+        it('[patchTests] it should PATCH a test (200)', async () => {
+            try {
+                let getRes = await chai.request(server).get('/v1/chatbots')
+                const newChatbot = getRes.body.filter((chatbot) => {
+                    if (chatbot.project_name === 'Chatbot Apple A')
+                        return chatbot;
+                })
+
+                getRes = await chai.request(server).get('/v1/tests')
+                const newTest = getRes.body.filter((test) => {
+                    if (test.name === 'Test 1 Apple to patch')
+                        return test;
+                })
+                const res = await chai.request(server).patch(`/v1/tests/${newTest[0].id}`)
                 .type('form')
                 .send({
                     "name": "Test 1 Apple", 
@@ -503,10 +612,19 @@ describe('test-my-chatbot API', function() {
         });
     });
 
-    describe('DELETE deleteCompanies, deleteChatbots, deleteUsers, deleteTests', function() {
+    describe('DELETE/PATCH deleteCompanies/patchCompanies, deleteChatbots/patchChatbots, deleteUsers/patchUsers, deleteTests/patchTests', function() {
         it('[deleteCompanies] it should return (404) by deleting a non existing resource', async () => {
             try {
                 const res = await chai.request(server).delete('/v1/companies/99')
+                res.should.have.status(404);
+            } catch (err) {
+                throw err;
+            }
+        });
+
+        it('[patchCompanies] it should return (404) by updating a non existing resource', async () => {
+            try {
+                const res = await chai.request(server).patch('/v1/companies/99')
                 res.should.have.status(404);
             } catch (err) {
                 throw err;
@@ -522,6 +640,15 @@ describe('test-my-chatbot API', function() {
             }
         });
 
+        it('[patchChatbots] it should return (404) by updating a non existing resource', async () => {
+            try {
+                const res = await chai.request(server).patch('/v1/chatbots/99')
+                res.should.have.status(404);
+            } catch (err) {
+                throw err;
+            }
+        });
+
         it('[deleteUsers] it should return (404) by deleting a non existing resource', async () => {
             try {
                 const res = await chai.request(server).delete('/v1/users/99')
@@ -531,6 +658,16 @@ describe('test-my-chatbot API', function() {
             }
         });
 
+        it('[patchUsers] it should return (404) by updating a non existing resource', async () => {
+            try {
+                const res = await chai.request(server).patch('/v1/users/99')
+                res.should.have.status(404);
+            } catch (err) {
+                throw err;
+            }
+        });
+
+
         it('[deleteTests] it should return (404) by deleting a non existing resource', async () => {
             try {
                 const res = await chai.request(server).delete('/v1/tests/99')
@@ -539,157 +676,14 @@ describe('test-my-chatbot API', function() {
                 throw err;
             }
         });
-    });
-});
 
-/*
-const chai = require('chai');
-const chaiHttp = require('chai-http');
-
-const server = require('../app');
-
-chai.should();
-chai.use(chaiHttp);
-
-describe('Baptizes', () => {
-    var db;
-
-    beforeEach(async () => {
-        db = server.db
-        try {
-            await db.baptized.destroy({
-                where: {},
-                truncate: true
-            })
-        } catch (err) {
-            console.error("Can't drop baptized table");
-            throw err
-        }
-    });
-
-    describe('/GET Baptizes', () => {
-        it('it should GET all the values (0 element)', async () => {
+        it('[patchTests] it should return (404) by updating a non existing resource', async () => {
             try {
-                const res = await chai.request(server).get('/api/v1/baptized')
-                res.should.have.status(200);
-                res.body.should.be.a('array');
-                res.body.length.should.be.eql(0);
-            } catch (err) {
-                throw err;
-            }
-        });
-
-        it('it should GET all the values (3 elements)', async () => {
-            try {
-                await db.baptized.create({
-                    name: 'Corentin',
-                    town: 'Espoo',
-                    mother_age: 1
-                })
-                await db.baptized.create({
-                    name: 'Leo',
-                    town: 'Espoo',
-                    mother_age: 23
-                })
-                await db.baptized.create({
-                    name: 'Thomas',
-                    town: 'Vantaa',
-                    mother_age: 21
-                })
-                const res = await chai.request(server).get('/api/v1/baptized')
-                res.should.have.status(200);
-                res.body.should.be.a('array');
-                res.body.length.should.be.eql(3);
-            } catch (err) {
-                throw err;
-            }
-        });
-
-        it('it should GET the first 2 values (3 elements with limit 2)', async () => {
-            try {
-                await db.baptized.create({
-                    name: 'Corentin',
-                    town: 'Espoo',
-                    mother_age: 1
-                })
-                await db.baptized.create({
-                    name: 'Leo',
-                    town: 'Espoo',
-                    mother_age: 23
-                })
-                await db.baptized.create({
-                    name: 'Thomas',
-                    town: 'Vantaa',
-                    mother_age: 21
-                })
-                const res = await chai.request(server).get('/api/v1/baptized?limit=2')
-                res.should.have.status(200);
-                res.body.should.be.a('array');
-                res.body.length.should.be.eql(2);
-            } catch (err) {
-                throw err;
-            }
-        });
-
-        it('it should GET the element named Leo', async () => {
-            try {
-                await db.baptized.create({
-                    name: 'Corentin',
-                    town: 'Espoo',
-                    mother_age: 1
-                })
-                await db.baptized.create({
-                    name: 'Leo',
-                    town: 'Espoo',
-                    mother_age: 23
-                })
-                await db.baptized.create({
-                    name: 'Thomas',
-                    town: 'Vantaa',
-                    mother_age: 21
-                })
-                const res = await chai.request(server).get('/api/v1/baptized?limit=2&name=Leo')
-                res.should.have.status(200);
-                res.body.should.be.a('array');
-                res.body.length.should.be.eql(1);
-                res.body[0].name.should.be.eql("Leo");
-            } catch (err) {
-                throw err;
-            }
-        });
-
-        it('it should GET the 23 year-old Leo', async () => {
-            try {
-                await db.baptized.create({
-                    name: 'Corentin',
-                    town: 'Espoo',
-                    mother_age: 1
-                })
-                await db.baptized.create({
-                    name: 'Leo',
-                    town: 'Espoo',
-                    mother_age: 23
-                })
-                await db.baptized.create({
-                    name: 'Leo',
-                    town: 'Espoo',
-                    mother_age: 21
-                })
-                await db.baptized.create({
-                    name: 'Thomas',
-                    town: 'Vantaa',
-                    mother_age: 21
-                })
-                const res = await chai.request(server).get('/api/v1/baptized?limit=2&name=Leo&mother_age=23')
-                res.should.have.status(200);
-                res.body.should.be.a('array');
-                res.body.length.should.be.eql(1);
-                res.body[0].name.should.be.eql("Leo");
-                res.body[0].mother_age.should.be.eql(23);
+                const res = await chai.request(server).patch('/v1/tests/99')
+                res.should.have.status(404);
             } catch (err) {
                 throw err;
             }
         });
     });
 });
-*/

@@ -16,3 +16,8 @@ export { default as deleteCompanies } from "./delete/deleteCompanies";
 export { default as deleteChatbots } from "./delete/deleteChatbots";
 export { default as deleteUsers } from "./delete/deleteUsers";
 export { default as deleteTests } from "./delete/deleteTests";
+
+export { default as patchCompanies } from "./patch/patchCompanies";
+export { default as patchChatbots } from "./patch/patchChatbots";
+export { default as patchUsers } from "./patch/patchUsers";
+export { default as patchTests } from "./patch/patchTests";

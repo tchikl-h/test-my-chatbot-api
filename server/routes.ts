@@ -29,6 +29,13 @@ export default class Routes {
             '/tests/:id': endpoints.deleteTests,
         }
 
+        const routesPatchV1 = {
+            '/companies/:id': endpoints.patchCompanies,
+            '/chatbots/:id': endpoints.patchChatbots,
+            '/users/:id': endpoints.patchUsers,
+            '/tests/:id': endpoints.patchTests,
+        }
+
         // Setup routes get
         for (const endpoint in routesGetV1) {
             const fct = routesGetV1[endpoint];
@@ -45,6 +52,12 @@ export default class Routes {
         for (const endpoint in routesDeleteV1) {
             const fct = routesDeleteV1[endpoint];
             app.route(`/v1${endpoint}`).delete(fct);
+        }
+
+        // Setup routes patch
+        for (const endpoint in routesPatchV1) {
+            const fct = routesPatchV1[endpoint];
+            app.route(`/v1${endpoint}`).patch(fct);
         }
     }
 }
