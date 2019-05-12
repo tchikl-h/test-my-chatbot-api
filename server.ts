@@ -5,17 +5,13 @@ import { Application } from "express";
 
 import Server from "./server/index";
 import Database from "./server/db/db";
-import * as cors from 'cors';
-import OriginHandler from './server/originHandler';
 
 class App {
     public app: Application = express();
     public db: Database = new Database();
     public server: Server;
-    public originHandler: OriginHandler = new OriginHandler();
 
     constructor() {
-        this.app.use(cors(this.originHandler.initCorsOptions()));
 
         this.app.use(function(req, res, next) {
             res.header('Access-Control-Allow-Credentials', 'true');
@@ -24,7 +20,7 @@ class App {
             next();
         });
 
-        this.server = new Server(this.app, this.db, this.originHandler);
+        this.server = new Server(this.app, this.db);
         const port: number = +process.env.PORT || 8080;
 
         this.app.listen(port, function (err: any) {

@@ -9,10 +9,12 @@ import {
   Table, Unique,
   UpdatedAt,
   HasOne,
-  HasMany
+  HasMany,
+  BelongsToMany,
+  BelongsTo
 } from 'sequelize-typescript';
-import ChatbotModel from './chatbot';
-import UserModel from './user';
+import Chatbot from './chatbot';
+import User from './user';
 
 @Table({
   tableName: "company",
@@ -21,7 +23,7 @@ import UserModel from './user';
   underscored: true,
   charset: "utf8mb4"
 })
-export default class CompanyModel extends Model<CompanyModel> {
+export default class Company extends Model<Company> {
 
   @PrimaryKey
   @AutoIncrement
@@ -31,11 +33,14 @@ export default class CompanyModel extends Model<CompanyModel> {
   @Column
   name: string;
 
-  @HasMany(() => ChatbotModel)
-  chatbots: ChatbotModel[];
+  @Column
+  description: string;
 
-  @HasMany(() => UserModel)
-  users: UserModel[];
+  @HasMany(() => Chatbot)
+  chatbots: Chatbot[];
+
+  @HasMany(() => User)
+  users: User[];
 
   // @CreatedAt
   // created_at: Date;

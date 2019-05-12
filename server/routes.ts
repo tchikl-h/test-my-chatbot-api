@@ -1,17 +1,32 @@
-import { Application, Request, Response, NextFunction, Router } from "express";
-import Database from './db/db';
+import { Application } from "express";
+import * as endpoints from "./endpoints";
 
 export default class Routes {
 
-    constructor(app: Application, db: Database) {
+    constructor(app: Application) {
         const routesGetV1 = {
-            '/company': db.getCompanies,
+            '/chatbots/:id/tests': endpoints.getTestsByChatbot,
+            '/companies/:companyId/users/:userId/chatbots': endpoints.getChatbotsByUser,
+            '/companies/:id/chatbots': endpoints.getChatbotsByCompany,
+            '/companies/:id/users': endpoints.getUsersByCompany,
+            '/companies': endpoints.getCompanies,
+            '/users': endpoints.getUsers,
+            '/chatbots': endpoints.getChatbots,
+            '/tests': endpoints.getTests
         }
 
         const routesPostV1 = {
+            '/companies': endpoints.postCompanies,
+            '/chatbots': endpoints.postChatbots,
+            '/users': endpoints.postUsers,
+            '/tests': endpoints.postTests,
         }
 
         const routesDeleteV1 = {
+            '/companies/:id': endpoints.deleteCompanies,
+            '/chatbots/:id': endpoints.deleteChatbots,
+            '/users/:id': endpoints.deleteUsers,
+            '/tests/:id': endpoints.deleteTests,
         }
 
         // Setup routes get

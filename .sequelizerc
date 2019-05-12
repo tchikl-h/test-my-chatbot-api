@@ -1,9 +1,9 @@
 const path = require('path');
 
 module.exports = {
-    'config': path.resolve('configs/config.json'),
-    'migrations-source-path': path.resolve('server/migrations'),
-    'migrations-compiled-path': path.resolve('built/server/migrations'),
+    'config': path.resolve('db-mock/configs/config.json'),
+    'migrations-source-path': path.resolve('db-mock/migrations'),
+    'migrations-compiled-path': path.resolve('built/db-mock/migrations'),
     'models-path': path.resolve('server/models'),
-    'seeders-path': path.resolve('built/server/seeders')
+    'seeders-path': path.resolve('built/db-mock/seeders')
 }

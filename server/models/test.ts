@@ -12,16 +12,16 @@ import {
     HasMany
   } from 'sequelize-typescript';
 
-  import Company from './company';
+  import Chatbot from './chatbot';
   
   @Table({
-    tableName: "user",
+    tableName: "test",
     paranoid: true,
     timestamps: false,
     underscored: true,
     charset: "utf8mb4"
   })
-  export default class User extends Model<User> {
+  export default class Test extends Model<Test> {
   
     @PrimaryKey
     @AutoIncrement
@@ -31,15 +31,15 @@ import {
     @Column
     name: string;
 
-    @Column(DataType.ARRAY(DataType.INTEGER))
-    chatbotIds: number[];
-
-    @ForeignKey(() => Company)
     @Column
-    companyId: number;
+    description: string;
 
-    @BelongsTo(() => Company)
-    company: Company;
+    @ForeignKey(() => Chatbot)
+    @Column
+    chatbotId: number;
+
+    @BelongsTo(() => Chatbot)
+    chatbot: Chatbot;
     
     // @CreatedAt
     // created_at: Date;

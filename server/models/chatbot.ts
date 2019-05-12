@@ -8,9 +8,11 @@ import {
     Table, Unique,
     UpdatedAt,
     BelongsTo,
-    HasOne
+    HasOne,
+    HasMany
   } from 'sequelize-typescript';
-  import CompanyModel from './company';
+  import Company from './company';
+  import Test from './test';
   
   @Table({
     tableName: "chatbot",
@@ -19,16 +21,18 @@ import {
     underscored: true,
     charset: "utf8mb4"
   })
-  export default class ChatbotModel extends Model<ChatbotModel> {
-  
+  export default class Chatbot extends Model<Chatbot> {
+
     @PrimaryKey
     @AutoIncrement
-    @ForeignKey(() => CompanyModel)
     @Column
     id: number;
   
     @Column
     project_name: string;
+
+    @Column
+    description: string;
 
     @Column
     container_mode: string;
@@ -42,8 +46,15 @@ import {
     @Column
     dialogflow_private_key: string;
 
-    @HasOne(() => CompanyModel)
-    company: CompanyModel;
+    @HasMany(() => Test)
+    tests: Test[];
+
+    @ForeignKey(() => Company)
+    @Column
+    companyId: number;
+
+    @BelongsTo(() => Company)
+    company: Company;
 
     // @CreatedAt
     // created_at: Date;
