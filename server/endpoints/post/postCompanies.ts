@@ -9,7 +9,9 @@ export default function postCompanies(req: Request, res: Response, next: NextFun
     CompanyModel.create({
         name: req.body.companyName,
         description: req.body.companyDescription,
-        date_update: new Date()
+        created_at: new Date(),
+        date_update: new Date(),
+        deleted_at: null,
     })
     .catch((err) => {
         console.log(err)

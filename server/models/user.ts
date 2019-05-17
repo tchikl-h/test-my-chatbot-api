@@ -17,7 +17,7 @@ import {
   @Table({
     tableName: "user",
     paranoid: true,
-    timestamps: false,
+    timestamps: true,
     underscored: true,
     charset: "utf8mb4"
   })
@@ -41,12 +41,12 @@ import {
     @BelongsTo(() => Company)
     company: Company;
     
-    // @CreatedAt
-    // created_at: Date;
+    @CreatedAt
+    created_at: Date;
   
     @UpdatedAt
     date_update: Date;
   
-    // @DeletedAt
-    // deleted_at: Date;
+    @DeletedAt
+    deleted_at: Date;
   }

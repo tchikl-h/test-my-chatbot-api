@@ -9,7 +9,9 @@ import {
         name: "User Amazon B",
         chatbotIds: [1, 2],
         companyId: 1,
+        created_at: new Date(),
         date_update: new Date(),
+        deleted_at: null,
       }], {});
     },
   

@@ -14,7 +14,9 @@ export default function postChatbots(req: Request, res: Response, next: NextFunc
         dialogflow_client_email: req.body.dialogflowClientEmail,
         dialogflow_private_key: req.body.dialogflowPrivateKey,
         companyId: parseInt(req.body.companyId),
-        date_update: new Date()
+        created_at: new Date(),
+        date_update: new Date(),
+        deleted_at: null,
     })
     .catch((err) => {
         console.log(err)

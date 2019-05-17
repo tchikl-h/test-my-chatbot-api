@@ -9,7 +9,9 @@ import {
         name: "User Microsoft A",
         chatbotIds: [7, 9],
         companyId: 3,
+        created_at: new Date(),
         date_update: new Date(),
+        deleted_at: null,
       }], {});
     },
   

@@ -19,7 +19,7 @@ import User from './user';
 @Table({
   tableName: "company",
   paranoid: true,
-  timestamps: false,
+  timestamps: true,
   underscored: true,
   charset: "utf8mb4"
 })
@@ -42,12 +42,12 @@ export default class Company extends Model<Company> {
   @HasMany(() => User)
   users: User[];
 
-  // @CreatedAt
-  // created_at: Date;
-
-  @UpdatedAt
-  date_update: Date;
-
-  // @DeletedAt
-  // deleted_at: Date;
+  @CreatedAt
+    created_at: Date;
+  
+    @UpdatedAt
+    date_update: Date;
+  
+    @DeletedAt
+    deleted_at: Date;
 }

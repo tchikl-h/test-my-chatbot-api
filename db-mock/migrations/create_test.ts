@@ -21,7 +21,13 @@ export = {
             chatbotId: {
                 type: Sequelize.INTEGER,
             },
+            created_at: {
+                type: Sequelize.DATE
+            },
             date_update: {
+                type: Sequelize.DATE
+            },
+            deleted_at: {
                 type: Sequelize.DATE
             }
         });

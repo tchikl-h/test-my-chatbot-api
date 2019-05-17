@@ -17,7 +17,7 @@ import {
   @Table({
     tableName: "chatbot",
     paranoid: true,
-    timestamps: false, // TODO: Leo needs to add the other _at fields in db
+    timestamps: true,
     underscored: true,
     charset: "utf8mb4"
   })
@@ -56,12 +56,12 @@ import {
     @BelongsTo(() => Company)
     company: Company;
 
-    // @CreatedAt
-    // created_at: Date;
+    @CreatedAt
+    created_at: Date;
   
     @UpdatedAt
     date_update: Date;
   
-    // @DeletedAt
-    // deleted_at: Date;
+    @DeletedAt
+    deleted_at: Date;
   }

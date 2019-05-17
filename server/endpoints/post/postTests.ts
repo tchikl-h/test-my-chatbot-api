@@ -6,11 +6,14 @@ import TestModel from "../../models/test";
 * url : http://localhost:8080/v1/tests {"name": "Test 1", "description": "description", "chatbotId": 10}
 */
 export default function postTests(req: Request, res: Response, next: NextFunction) {
+    console.log(new Date());
     TestModel.create({
         name: req.body.name,
         description: req.body.description,
         chatbotId: parseInt(req.body.chatbotId),
-        date_update: new Date()
+        created_at: new Date(),
+        date_update: new Date(),
+        deleted_at: null,
     })
     .catch((err) => {
         console.log(err)

@@ -13,7 +13,9 @@ import {
         dialogflow_client_email: "amazon@hotmail.fr",
         dialogflow_private_key: "UY9J8F8EZ7D8D687ZJYEF98Y",
         companyId: 1,
+        created_at: new Date(),
         date_update: new Date(),
+        deleted_at: null,
       }], {});
     },
   

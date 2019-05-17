@@ -9,7 +9,9 @@ import {
         name: "User Google A",
         chatbotIds: [4, 6],
         companyId: 2,
+        created_at: new Date(),
         date_update: new Date(),
+        deleted_at: null,
       }], {});
     },
   

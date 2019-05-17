@@ -9,7 +9,9 @@ export = {
       name: "Test 1",
       description: "description",
       chatbotId: 8,
+      created_at: new Date(),
       date_update: new Date(),
+      deleted_at: null,
     }], {});
   },
 

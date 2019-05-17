@@ -10,7 +10,9 @@ export default function postUsers(req: Request, res: Response, next: NextFunctio
         name: req.body.name,
         chatbotIds: JSON.parse(req.body.chatbotIds),
         companyId: parseInt(req.body.companyId),
-        date_update: new Date()
+        created_at: new Date(),
+        date_update: new Date(),
+        deleted_at: null,
     })
     .catch((err) => {
         console.log(err)

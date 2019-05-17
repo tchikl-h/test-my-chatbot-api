@@ -1,10 +1,10 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const app = require('../../built/server').default;
-const companyProperties = ["id", "name", "description"];
-const chatbotProperties = ["id", "project_name", "description", "container_mode", "dialogflow_project_id", "dialogflow_client_email", "dialogflow_private_key", "companyId"];
-const userProperties = ["id", "name", "chatbotIds", "companyId"];
-const testProperties = ["id", "name", "description", "chatbotId"];
+const companyProperties = ["id", "name", "description", "created_at", "date_update", "deleted_at"];
+const chatbotProperties = ["id", "project_name", "description", "container_mode", "dialogflow_project_id", "dialogflow_client_email", "dialogflow_private_key", "companyId", "created_at", "date_update", "deleted_at"];
+const userProperties = ["id", "name", "chatbotIds", "companyId", "created_at", "date_update", "deleted_at"];
+const testProperties = ["id", "name", "description", "chatbotId", "created_at", "date_update", "deleted_at"];
 
 
 chai.should();
@@ -17,7 +17,7 @@ describe('test-my-chatbot API', function() {
 
     before(done => {
         setTimeout(function() {
-            server = app.listen(3000, () => {
+            server = app.listen(3001, () => {
                 console.log("Server launched !");
             });
             done();
@@ -98,6 +98,7 @@ describe('test-my-chatbot API', function() {
             try {
                 const res = await chai.request(server).get('/v1/tests')
                 res.body.should.be.a('array');
+                console.log(res.body);
                 res.body.length.should.be.eql(18);
                 res.body.every(test => expect(test).to.have.all.keys(testProperties))
             } catch (err) {
