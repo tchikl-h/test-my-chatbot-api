@@ -2,11 +2,15 @@ import {
     QueryInterface,
     SequelizeStatic
   } from 'sequelize';
-  
+  import * as bcrypt from "bcrypt";
+
   export = {
     up: (queryInterface: QueryInterface, Sequelize: SequelizeStatic) => {
       return queryInterface.bulkInsert('user', [{
-        name: "User Microsoft C",
+        firstName: "John",
+        lastName: "Doe",
+        userName: "jdoe",
+        password: bcrypt.hashSync("xaxa123", bcrypt.genSaltSync(10)),
         chatbotIds: [8, 9],
         companyId: 3,
         created_at: new Date(),

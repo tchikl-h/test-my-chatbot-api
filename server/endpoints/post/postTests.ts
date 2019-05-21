@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import TestModel from "../../models/test";
+import * as bcrypt from "bcrypt";
 
 /**
 * Post tests

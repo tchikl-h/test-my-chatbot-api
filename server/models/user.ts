@@ -19,7 +19,7 @@ import {
     paranoid: true,
     timestamps: true,
     underscored: true,
-    charset: "utf8mb4"
+    charset: "utf8mb4",
   })
   export default class User extends Model<User> {
   
@@ -29,7 +29,16 @@ import {
     id: number;
   
     @Column
-    name: string;
+    firstName: string;
+
+    @Column
+    lastName: string;
+
+    @Column
+    userName: string;
+
+    @Column
+    password: string;
 
     @Column(DataType.ARRAY(DataType.INTEGER))
     chatbotIds: number[];

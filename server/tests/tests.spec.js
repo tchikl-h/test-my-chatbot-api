@@ -3,8 +3,9 @@ const chaiHttp = require('chai-http');
 const app = require('../../built/server').default;
 const companyProperties = ["id", "name", "description", "created_at", "date_update", "deleted_at"];
 const chatbotProperties = ["id", "project_name", "description", "container_mode", "dialogflow_project_id", "dialogflow_client_email", "dialogflow_private_key", "companyId", "created_at", "date_update", "deleted_at"];
-const userProperties = ["id", "name", "chatbotIds", "companyId", "created_at", "date_update", "deleted_at"];
+const userProperties = ["id", "firstName", "lastName", "userName", "password", "chatbotIds", "companyId", "created_at", "date_update", "deleted_at"];
 const testProperties = ["id", "name", "description", "chatbotId", "created_at", "date_update", "deleted_at"];
+const bcrypt = require("bcrypt");
 
 
 chai.should();
@@ -98,7 +99,6 @@ describe('test-my-chatbot API', function() {
             try {
                 const res = await chai.request(server).get('/v1/tests')
                 res.body.should.be.a('array');
-                console.log(res.body);
                 res.body.length.should.be.eql(18);
                 res.body.every(test => expect(test).to.have.all.keys(testProperties))
             } catch (err) {
@@ -374,7 +374,10 @@ describe('test-my-chatbot API', function() {
                 const res = await chai.request(server).post('/v1/users')
                 .type('form')
                 .send({
-                    "name": "User Apple A to patch",
+                    "firstName": "William",
+                    "lastName": "User Apple A to patch",
+                    "userName": "wghetta",
+                    "password": bcrypt.hashSync("toto123", bcrypt.genSaltSync(10)),
                     "chatbotIds": JSON.stringify(chatbotIds),
                     "companyId": newCompanyName[0].id
                 })
@@ -400,7 +403,7 @@ describe('test-my-chatbot API', function() {
 
                 getRes = await chai.request(server).get('/v1/users')
                 const newUser = getRes.body.filter((user) => {
-                    if (user.name === 'User Apple A to patch')
+                    if (user.lastName === 'User Apple A to patch')
                         return user;
                 })
                 let chatbotIds = [];
@@ -408,7 +411,10 @@ describe('test-my-chatbot API', function() {
                 const res = await chai.request(server).patch(`/v1/users/${newUser[0].id}`)
                 .type('form')
                 .send({
-                    "name": "User Apple A",
+                    "firstName": "William",
+                    "lastName": "User Apple A",
+                    "userName": "wghetta",
+                    "password": bcrypt.hashSync("toto123", bcrypt.genSaltSync(10)),
                     "chatbotIds": JSON.stringify(chatbotIds),
                     "companyId": newCompanyName[0].id
                 })
@@ -504,9 +510,10 @@ describe('test-my-chatbot API', function() {
 
                 getRes = await chai.request(server).get('/v1/users')
                 const newUser = getRes.body.filter((user) => {
-                    if (user.name === 'User Apple A')
+                    if (user.lastName === 'User Apple A')
                         return user;
                 })
+                console.log(newUser);
                 const res = await chai.request(server).get(`/v1/companies/${newCompanyName[0].id}/users/${newUser[0].id}/chatbots`)
                 res.body.should.be.a('array');
                 res.body.length.should.be.eql(1);
@@ -544,7 +551,7 @@ describe('test-my-chatbot API', function() {
             try {
                 const getRes = await chai.request(server).get('/v1/users')
                 const userToDelete = getRes.body.filter((user) => {
-                    if (user.name === 'User Apple A')
+                    if (user.lastName === 'User Apple A')
                         return user;
                 })
                 const res = await chai.request(server).delete(`/v1/users/${userToDelete[0].id}`)
