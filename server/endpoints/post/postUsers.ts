@@ -7,12 +7,14 @@ import * as bcrypt from "bcrypt";
 * url : http://localhost:8080/v1/users {"firstName": "Roger", "lastName": "Smith", "userName": "rsmith", "password": "toto123", "chatbotIds": 10, "companyId": 4}
 */
 export default function postUsers(req: Request, res: Response, next: NextFunction) {
+    console.log(req.body);
     UserModel.create({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         userName: req.body.userName,
         password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10)),
-        chatbotIds: JSON.parse(req.body.chatbotIds),
+        chatbotIds: req.body.chatbotIds,
+        companyOwner: req.body.companyOwner ? req.body.companyOwner : false,
         companyId: parseInt(req.body.companyId),
         created_at: new Date(),
         date_update: new Date(),
@@ -22,7 +24,7 @@ export default function postUsers(req: Request, res: Response, next: NextFunctio
         console.log(err)
         res.status(500).send(err)
     })
-    .then(() => {
-        res.status(200).send();
+    .then((user: UserModel) => {
+        res.status(200).send(user);
     })
 }

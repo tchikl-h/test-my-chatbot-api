@@ -27,7 +27,7 @@ export = {
                 type: Sequelize.STRING
             },
             dialogflow_private_key: {
-                type: Sequelize.STRING
+                type: Sequelize.TEXT
             },
             companyId: {
                 type: Sequelize.INTEGER

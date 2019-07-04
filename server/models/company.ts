@@ -43,11 +43,11 @@ export default class Company extends Model<Company> {
   users: User[];
 
   @CreatedAt
-    created_at: Date;
-  
-    @UpdatedAt
-    date_update: Date;
-  
-    @DeletedAt
-    deleted_at: Date;
+  created_at: Date;
+
+  @UpdatedAt
+  date_update: Date;
+
+  @DeletedAt
+  deleted_at: Date;
 }

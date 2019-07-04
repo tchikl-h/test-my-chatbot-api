@@ -9,20 +9,19 @@ import {
     UpdatedAt,
     BelongsTo,
     HasOne,
-    HasMany,
-    Default
+    HasMany
   } from 'sequelize-typescript';
 
-  import Company from './company';
+  import Chatbot from './chatbot';
   
   @Table({
-    tableName: "user",
+    tableName: "log",
     paranoid: true,
     timestamps: true,
     underscored: true,
-    charset: "utf8mb4",
+    charset: "utf8mb4"
   })
-  export default class User extends Model<User> {
+  export default class Log extends Model<Log> {
   
     @PrimaryKey
     @AutoIncrement
@@ -30,30 +29,17 @@ import {
     id: number;
   
     @Column
-    firstName: string;
+    logs: string;
 
     @Column
-    lastName: string;
+    coverage: string;
 
+    @ForeignKey(() => Chatbot)
     @Column
-    userName: string;
+    chatbotId: number;
 
-    @Column
-    password: string;
-
-    @Default(false)
-    @Column
-    companyOwner: boolean;
-
-    @Column(DataType.ARRAY(DataType.INTEGER))
-    chatbotIds: number[];
-
-    @ForeignKey(() => Company)
-    @Column
-    companyId: number;
-
-    @BelongsTo(() => Company)
-    company: Company;
+    @BelongsTo(() => Chatbot)
+    chatbot: Chatbot;
     
     @CreatedAt
     created_at: Date;

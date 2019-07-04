@@ -24,10 +24,8 @@ export default function postUsers(req: Request, res: Response, next: NextFunctio
         UserModel.update({
             firstName: req.body.firstName,
             lastName: req.body.lastName,
-            userName: req.body.userName,
-            password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10)),
-            chatbotIds: JSON.parse(req.body.chatbotIds),
-            companyId: parseInt(req.body.companyId),
+            password: req.body.password ? bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10)) : user.password,
+            chatbotIds: req.body.chatbotIds,
             date_update: new Date()
         }, {
             where : {

@@ -3,7 +3,7 @@ const chaiHttp = require('chai-http');
 const app = require('../../built/server').default;
 const companyProperties = ["id", "name", "description", "created_at", "date_update", "deleted_at"];
 const chatbotProperties = ["id", "project_name", "description", "container_mode", "dialogflow_project_id", "dialogflow_client_email", "dialogflow_private_key", "companyId", "created_at", "date_update", "deleted_at"];
-const userProperties = ["id", "firstName", "lastName", "userName", "password", "chatbotIds", "companyId", "created_at", "date_update", "deleted_at"];
+const userProperties = ["id", "firstName", "lastName", "userName", "password", "companyOwner", "chatbotIds", "companyId", "created_at", "date_update", "deleted_at"];
 const testProperties = ["id", "name", "description", "chatbotId", "created_at", "date_update", "deleted_at"];
 const bcrypt = require("bcrypt");
 
@@ -371,14 +371,15 @@ describe('test-my-chatbot API', function() {
                 })
                 let chatbotIds = [];
                 chatbotIds.push(newChatbot[0].id);
+                chatbotIds.push(9);
                 const res = await chai.request(server).post('/v1/users')
                 .type('form')
                 .send({
                     "firstName": "William",
                     "lastName": "User Apple A to patch",
                     "userName": "wghetta",
-                    "password": bcrypt.hashSync("toto123", bcrypt.genSaltSync(10)),
-                    "chatbotIds": JSON.stringify(chatbotIds),
+                    "password": "toto123",
+                    "chatbotIds": chatbotIds,
                     "companyId": newCompanyName[0].id
                 })
                 res.should.have.status(200);
@@ -413,10 +414,8 @@ describe('test-my-chatbot API', function() {
                 .send({
                     "firstName": "William",
                     "lastName": "User Apple A",
-                    "userName": "wghetta",
-                    "password": bcrypt.hashSync("toto123", bcrypt.genSaltSync(10)),
-                    "chatbotIds": JSON.stringify(chatbotIds),
-                    "companyId": newCompanyName[0].id
+                    "password": "toto123",
+                    "chatbotIds": chatbotIds
                 })
                 res.should.have.status(200);
             } catch (err) {
@@ -513,7 +512,6 @@ describe('test-my-chatbot API', function() {
                     if (user.lastName === 'User Apple A')
                         return user;
                 })
-                console.log(newUser);
                 const res = await chai.request(server).get(`/v1/companies/${newCompanyName[0].id}/users/${newUser[0].id}/chatbots`)
                 res.body.should.be.a('array');
                 res.body.length.should.be.eql(1);

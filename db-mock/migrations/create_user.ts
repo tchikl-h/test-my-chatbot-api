@@ -24,6 +24,9 @@ export = {
             password: {
                 type: Sequelize.STRING,
             },
+            companyOwner: {
+                type: Sequelize.BOOLEAN,
+            },
             chatbotIds: {
                 type: Sequelize.ARRAY(Sequelize.INTEGER),
             },

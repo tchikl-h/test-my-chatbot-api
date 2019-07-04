@@ -1,5 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import ChatbotModel from "../../models/chatbot";
+import UserModel from "../../models/user";
+import CompanyModel from "../../models/company";
+import { exec } from 'child_process';
 
 /**
 * Delete chatbot
@@ -9,7 +12,8 @@ export default function deleteChatbots(req: Request, res: Response, next: NextFu
     ChatbotModel.findOne({
         where: {
             id: req.params.id,
-        }
+        },
+        include: [CompanyModel]
     })
     .catch((err) => {
         console.log(err)
@@ -30,7 +34,36 @@ export default function deleteChatbots(req: Request, res: Response, next: NextFu
             res.status(500).send(err)
         })
         .then(() => {
-            res.status(200).send();
+            // TODO: delete all references from this chatbot in users of the company
+
+            // create a container for all the users in the company
+            UserModel.findAll({
+                where: {
+                    companyId: chatbot.companyId
+                },
+                include: [CompanyModel]
+            })
+            .catch((err) => {
+                console.log(err)
+                res.status(500).send(err)
+            })
+            .then((users: UserModel[]) => {
+                // TODO: properly delete the spec/convo/* when the chatbot is being deleted
+                console.log(`docker start $(docker ps -aqf "name=${chatbot.company.name}_${chatbot.project_name}_${users[0].userName}")`);
+                exec(`docker start $(docker ps -aqf "name=${chatbot.company.name}_${chatbot.project_name}_${users[0].userName}")`, (err, stdout, stderr) => {
+                    console.log(`docker exec -d $(docker ps -aqf "name=${chatbot.company.name}_${chatbot.project_name}_${users[0].userName}") sh -c "rm /home/botium-bindings/samples/botframework/spec/convo/*"`);
+                    exec(`docker exec -d $(docker ps -aqf "name=${chatbot.company.name}_${chatbot.project_name}_${users[0].userName}") sh -c "rm /home/botium-bindings/samples/botframework/spec/convo/*"`, (err, stdout, stderr) => {
+                        let containerIds = "";
+                        users.forEach(user => {
+                            containerIds = containerIds + ` $(docker ps -aqf "name=${user.company.name}_${chatbot.project_name}_${user.userName}") `;
+                        })
+                        exec(`docker stop ${containerIds} && docker rm ${containerIds}`, (err, stdout, stderr) => {
+                            console.log(err);
+                        });
+                        res.status(200).send();
+                    });
+                });
+            });
         })
     })
 }

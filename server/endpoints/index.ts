@@ -6,6 +6,11 @@ export { default as getUsersByCompany } from "./get/getUsersByCompany";
 export { default as getChatbotsByUser } from "./get/getChatbotsByUser";
 export { default as getTestsByChatbot } from "./get/getTestsByChatbot";
 export { default as getTests } from "./get/getTests";
+export { default as getEncryptPassword } from "./get/getEncryptPassword";
+export { default as getDecryptPassword } from "./get/getDecryptPassword";
+export { default as startChatbot } from "./get/startChatbot";
+export { default as stopChatbot } from "./get/stopChatbot";
+export { default as launchTestForChatbot } from "./get/launchTestForChatbot";
 
 export { default as postCompanies } from "./post/postCompanies";
 export { default as postChatbots } from "./post/postChatbots";

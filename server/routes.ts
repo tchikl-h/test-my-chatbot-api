@@ -12,7 +12,12 @@ export default class Routes {
             '/companies': endpoints.getCompanies,
             '/users': endpoints.getUsers,
             '/chatbots': endpoints.getChatbots,
-            '/tests': endpoints.getTests
+            '/tests': endpoints.getTests,
+            '/encrypt/:toEncrypt': endpoints.getEncryptPassword,
+            '/decrypt/:toDecrypt': endpoints.getDecryptPassword,
+            '/companies/:companyId/users/:userId/chatbots/:chatbotId/start': endpoints.startChatbot,
+            '/companies/:companyId/users/:userId/chatbots/:chatbotId/stop': endpoints.stopChatbot,
+            '/companies/:companyId/users/:userId/chatbots/:chatbotId/launch': endpoints.launchTestForChatbot,
         }
 
         const routesPostV1 = {
@@ -26,7 +31,7 @@ export default class Routes {
             '/companies/:id': endpoints.deleteCompanies,
             '/chatbots/:id': endpoints.deleteChatbots,
             '/users/:id': endpoints.deleteUsers,
-            '/tests/:id': endpoints.deleteTests,
+            '/users/:userId/tests/:testId': endpoints.deleteTests,
         }
 
         const routesPatchV1 = {

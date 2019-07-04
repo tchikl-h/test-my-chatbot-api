@@ -6,6 +6,8 @@ import CompanyModel from "../../models/company";
 * url : http://localhost:8080/v1/companies {"companyName": "Apple", "companyDescription": "Awesome Description"}
 */
 export default function postCompanies(req: Request, res: Response, next: NextFunction) {
+    console.log(req.body.companyName);
+    console.log(req.body.companyDescription);
     CompanyModel.create({
         name: req.body.companyName,
         description: req.body.companyDescription,
@@ -17,7 +19,7 @@ export default function postCompanies(req: Request, res: Response, next: NextFun
         console.log(err)
         res.status(500).send(err)
     })
-    .then(() => {
-        res.status(200).send();
+    .then((company: CompanyModel) => {
+        res.status(200).send(company);
     })
 }

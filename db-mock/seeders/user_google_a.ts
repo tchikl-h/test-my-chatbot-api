@@ -11,6 +11,7 @@ import {
         lastName: "Cleric",
         userName: "dcleric",
         password: bcrypt.hashSync("dada123", bcrypt.genSaltSync(10)),
+        companyOwner: true,
         chatbotIds: [4, 6],
         companyId: 2,
         created_at: new Date(),
