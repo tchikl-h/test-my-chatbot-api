@@ -25,6 +25,7 @@ export default function postUsers(req: Request, res: Response, next: NextFunctio
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             password: req.body.password ? bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10)) : user.password,
+            mail: req.body.mail,
             chatbotIds: req.body.chatbotIds,
             date_update: new Date()
         }, {

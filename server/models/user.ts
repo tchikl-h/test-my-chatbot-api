@@ -41,6 +41,9 @@ import {
     @Column
     password: string;
 
+    @Column
+    mail: string;
+
     @Default(false)
     @Column
     companyOwner: boolean;
