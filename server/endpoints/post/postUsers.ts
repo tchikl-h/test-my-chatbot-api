@@ -13,6 +13,7 @@ export default function postUsers(req: Request, res: Response, next: NextFunctio
         lastName: req.body.lastName,
         userName: req.body.userName,
         password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10)),
+        mail: req.body.mail,
         chatbotIds: req.body.chatbotIds,
         companyOwner: req.body.companyOwner ? req.body.companyOwner : false,
         companyId: parseInt(req.body.companyId),

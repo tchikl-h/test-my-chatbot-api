@@ -24,6 +24,9 @@ export = {
             password: {
                 type: Sequelize.STRING,
             },
+            mail: {
+                type: Sequelize.STRING,
+            },
             companyOwner: {
                 type: Sequelize.BOOLEAN,
             },
