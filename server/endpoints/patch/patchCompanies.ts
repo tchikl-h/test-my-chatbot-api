@@ -23,6 +23,7 @@ export default function patchCompanies(req: Request, res: Response, next: NextFu
         CompanyModel.update({
             name: req.body.companyName,
             description: req.body.companyDescription,
+            premium: req.body.premium,
             date_update: new Date()
         }, {
             where : {

@@ -16,6 +16,7 @@ export { default as postCompanies } from "./post/postCompanies";
 export { default as postChatbots } from "./post/postChatbots";
 export { default as postUsers } from "./post/postUsers";
 export { default as postTests } from "./post/postTests";
+export { default as postLogs } from "./post/postLogs";
 
 export { default as deleteCompanies } from "./delete/deleteCompanies";
 export { default as deleteChatbots } from "./delete/deleteChatbots";

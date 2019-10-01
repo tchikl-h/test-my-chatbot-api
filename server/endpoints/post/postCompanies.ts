@@ -11,6 +11,7 @@ export default function postCompanies(req: Request, res: Response, next: NextFun
     CompanyModel.create({
         name: req.body.companyName,
         description: req.body.companyDescription,
+        premium: req.body.premium,
         created_at: new Date(),
         date_update: new Date(),
         deleted_at: null,

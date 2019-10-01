@@ -26,10 +26,11 @@ export default function patchChatbots(req: Request, res: Response, next: NextFun
         ChatbotModel.update({
             project_name: req.body.projectName,
             description: req.body.description,
-            container_mode: req.body.containerMode,
+            container_mode: "dialogflow",//req.body.containerMode,
             dialogflow_project_id: req.body.dialogflowProjectId,
             dialogflow_client_email: req.body.dialogflowClientEmail,
             dialogflow_private_key: req.body.dialogflowPrivateKey,
+            periodic_build: req.body.periodicBuild,
             companyId: parseInt(req.body.companyId),
             date_update: new Date()
         }, {
@@ -54,27 +55,18 @@ export default function patchChatbots(req: Request, res: Response, next: NextFun
                 res.status(500).send(err)
             })
             .then((users: UserModel[]) => {
-
-                exec(`docker volume create --name ${users[0].company.name}_${req.body.projectName}`, (err, stdout, stderr) => {
-                    if (err)
-                        console.log(err);
-                    let containerIds = "";
-                    users.forEach(user => {
-                        containerIds = containerIds + ` $(docker ps -aqf "name=${user.company.name}_${prevChatbot.project_name}_${user.userName}") `;
-                    })
-                    console.log(`docker stop ${containerIds} && docker rm ${containerIds}`);
-                    exec(`docker stop ${containerIds} && docker rm ${containerIds}`, (err, stdout, stderr) => {
+                users.forEach((user, index) => {
+                    let crontab = "(echo '0 *" + (prevChatbot.periodic_build !== null ? `/${prevChatbot.periodic_build}` : "") + " * * * cd /home/botium-bindings/samples/botframework && npm run test >/dev/null 2>&1') | crontab - ; ";
+                    exec(`docker exec -d $(docker ps -aqf "name=${prevChatbot.company.name}_${prevChatbot.project_name}_${users[0].userName}") sh -c ""`, (err, stdout, stderr) => {
                         if (err)
                             console.log(err);
-                        users.forEach(user => {
-                            exec(`docker create -v ${user.company.name}_${req.body.projectName}:/home/botium-bindings/samples/botframework/spec/convo --name ${user.company.name}_${req.body.projectName}_${user.userName} -e PROJECTNAME='${req.body.projectName}' -e CONTAINERMODE='${req.body.containerMode}' -e DIALOGFLOW_PROJECT_ID='${req.body.dialogflowProjectId}' -e DIALOGFLOW_CLIENT_EMAIL='${req.body.dialogflowClientEmail}' -e DIALOGFLOW_PRIVATE_KEY='${req.body.dialogflowPrivateKey}' -e COMPANY_ID='${req.body.companyId}' -e CHATBOT_ID='${prevChatbot.id}' -e USER_ID='${user.id}' -e HOST='${process.env.HOST}' chatbot:latest sh -c "cd /home/botium-bindings/samples/botframework/node_modules/jasmine ; npm run dotenvInit ; cd /home/botium-bindings/samples/botframework/node_modules/botium-cli ; npm run dotenvInit ; cd ../.. ; mkdir -p logs/${user.company.name}/${req.body.projectName}/${user.userName} ; npm run generateBotium && npm run emulator"`, (err, stdout, stderr) => {
-                                if (err)
-                                    console.log(err);
-                            });
-                        });
                     });
-                    res.status(200).send();
+                    exec(`docker create -v ${user.company.name}_${req.body.projectName}:/home/botium-bindings/samples/botframework/spec/convo --name ${user.company.name}_${req.body.projectName}_${user.userName} -e PROJECTNAME='${req.body.projectName}' -e CONTAINERMODE='dialogflow' -e DIALOGFLOW_PROJECT_ID='${req.body.dialogflowProjectId}' -e DIALOGFLOW_CLIENT_EMAIL='${req.body.dialogflowClientEmail}' -e DIALOGFLOW_PRIVATE_KEY='${req.body.dialogflowPrivateKey}' -e COMPANY_ID='${req.body.companyId}' -e CHATBOT_ID='${prevChatbot.id}' -e USER_ID='${user.id}' -e HOST='${process.env.HOST}' chatbot:latest sh -c "${crontab} service cron restart ; cd /home/botium-bindings/samples/botframework/node_modules/jasmine ; npm run dotenvInit ; cd /home/botium-bindings/samples/botframework/node_modules/botium-cli ; npm run dotenvInit ; cd ../.. ; mkdir -p logs/${user.company.name}/${req.body.projectName}/${user.userName} ; npm run generateBotium && npm run emulator"`, (err, stdout, stderr) => {
+                        if (err)
+                            console.log(err);
+                    });
                 });
+                res.status(200).send();
             });
         })
     });

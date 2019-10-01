@@ -6,6 +6,7 @@ import CompanyModel from "../models/company";
 import UserModel from "../models/user";
 import ChatbotModel from "../models/chatbot";
 import TestModel from "../models/test";
+import LogModel from "../models/log";
 
 export default class Database {
     sequelize: Sequelize;
@@ -23,9 +24,9 @@ export default class Database {
             port: parseInt(process.env.DB_PORT),
             username: process.env.DB_USER,
             password: process.env.DB_PASS,
-            database: process.env.DB_NAME
+            database: process.env.DB_NAME,
         });
-        await this.sequelize.addModels([CompanyModel, UserModel, ChatbotModel, TestModel]);
+        await this.sequelize.addModels([CompanyModel, UserModel, ChatbotModel, TestModel, LogModel]);
         await this.sequelize.sync();
     }
 }

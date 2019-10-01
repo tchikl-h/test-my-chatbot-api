@@ -46,6 +46,9 @@ import {
     @Column
     dialogflow_private_key: string;
 
+    @Column
+    periodic_build: number;
+
     @HasMany(() => Test)
     tests: Test[];
 

@@ -3,22 +3,23 @@ import {
     SequelizeStatic
 } from 'sequelize';
 
+
 export = {
     up: (queryInterface: QueryInterface, Sequelize: SequelizeStatic) => {
-        return queryInterface.createTable('company', {
+        return queryInterface.createTable('log', {
             id: {
                 autoIncrement: true,
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
-            name: {
+            logs: {
                 type: Sequelize.STRING,
             },
-            description: {
+            coverage: {
                 type: Sequelize.STRING,
             },
-            premium: {
-                type: Sequelize.BOOLEAN,
+            chatbotId: {
+                type: Sequelize.INTEGER,
             },
             created_at: {
                 type: Sequelize.DATE
@@ -33,6 +34,6 @@ export = {
     },
 
     down: (queryInterface: QueryInterface, Sequelize: SequelizeStatic) => {
-        return queryInterface.dropTable('company');
+        return queryInterface.dropTable('log');
     }
 };

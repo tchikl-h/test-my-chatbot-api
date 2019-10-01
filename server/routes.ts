@@ -25,6 +25,7 @@ export default class Routes {
             '/chatbots': endpoints.postChatbots,
             '/users': endpoints.postUsers,
             '/tests': endpoints.postTests,
+            '/logs': endpoints.postLogs,
         }
 
         const routesDeleteV1 = {

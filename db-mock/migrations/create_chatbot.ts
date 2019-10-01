@@ -29,6 +29,9 @@ export = {
             dialogflow_private_key: {
                 type: Sequelize.TEXT
             },
+            periodic_build: {
+                type: Sequelize.INTEGER
+            },
             companyId: {
                 type: Sequelize.INTEGER
             },

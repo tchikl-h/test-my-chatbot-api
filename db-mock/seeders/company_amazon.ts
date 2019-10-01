@@ -8,6 +8,7 @@ import {
       return queryInterface.bulkInsert('company', [{
         name: "Amazon",
         description: "Awesome description",
+        premium: false,
         created_at: new Date(),
         date_update: new Date(),
         deleted_at: null,

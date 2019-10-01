@@ -12,10 +12,11 @@ export default function postChatbots(req: Request, res: Response, next: NextFunc
     ChatbotModel.create({
         project_name: req.body.projectName,
         description: req.body.description,
-        container_mode: req.body.containerMode,
+        container_mode: "dialogflow",//req.body.containerMode,
         dialogflow_project_id: req.body.dialogflowProjectId,
         dialogflow_client_email: req.body.dialogflowClientEmail,
         dialogflow_private_key: req.body.dialogflowPrivateKey,
+        periodic_build: req.body.periodicBuild,
         companyId: parseInt(req.body.companyId),
         created_at: new Date(),
         date_update: new Date(),
@@ -69,8 +70,13 @@ export default function postChatbots(req: Request, res: Response, next: NextFunc
                     exec(`docker volume create --name ${user.company.name}_${chatbot.project_name}`, (err, stdout, stderr) => {
                         if (err)
                             console.log(err);
+                        let users_mail = users.map(user => {
+                            if (user.chatbotIds.includes(chatbot.id))
+                                return user.mail
+                        }).join(";");
                         users.forEach(user => {
-                            exec(`docker create -v ${user.company.name}_${chatbot.project_name}:/home/botium-bindings/samples/botframework/spec/convo --name ${user.company.name}_${chatbot.project_name}_${user.userName} -e PROJECTNAME='${chatbot.project_name}' -e CONTAINERMODE='${chatbot.container_mode}' -e DIALOGFLOW_PROJECT_ID='${chatbot.dialogflow_project_id}' -e DIALOGFLOW_CLIENT_EMAIL='${chatbot.dialogflow_client_email}' -e DIALOGFLOW_PRIVATE_KEY='${chatbot.dialogflow_private_key}' -e COMPANY_ID='${chatbot.companyId}' -e CHATBOT_ID='${chatbot.id}' -e USER_ID='${user.id}' -e HOST='${process.env.HOST}' chatbot:latest sh -c "cd /home/botium-bindings/samples/botframework/node_modules/jasmine ; npm run dotenvInit ; cd /home/botium-bindings/samples/botframework/node_modules/botium-cli ; npm run dotenvInit ; cd ../.. ; mkdir -p logs/${user.company.name}/${chatbot.project_name}/${user.userName} ; npm run generateBotium && npm run emulator"`, (err, stdout, stderr) => {
+                            let crontab = "(echo '0 *" + (chatbot.periodic_build !== null ? `/${chatbot.periodic_build}` : "") + " * * * cd /home/botium-bindings/samples/botframework && npm run test >/dev/null 2>&1') | crontab - ; ";
+                            exec(`docker create -v ${user.company.name}_${chatbot.project_name}:/home/botium-bindings/samples/botframework/spec/convo --name ${user.company.name}_${chatbot.project_name}_${user.userName} -e PROJECTNAME='${chatbot.project_name}' -e CONTAINERMODE='dialogflow' -e DIALOGFLOW_PROJECT_ID='${chatbot.dialogflow_project_id}' -e DIALOGFLOW_CLIENT_EMAIL='${chatbot.dialogflow_client_email}' -e DIALOGFLOW_PRIVATE_KEY='${chatbot.dialogflow_private_key}' -e COMPANY_ID='${chatbot.companyId}' -e CHATBOT_ID='${chatbot.id}' -e USER_ID='${user.id}' -e HOST='${process.env.HOST}' -e HOST_API='${process.env.HOST_API}' -e MY_MAIL='${process.env.MY_MAIL}' -e MY_MAIL_PASSWORD='${process.env.MY_MAIL_PASSWORD}' -e USERS_EMAIL='${users_mail}' chatbot:latest sh -c "${crontab} service cron restart ; cd /home/botium-bindings/samples/botframework/node_modules/jasmine ; npm run dotenvInit ; cd /home/botium-bindings/samples/botframework/node_modules/botium-cli ; npm run dotenvInit ; cd ../.. ; mkdir -p logs/${user.company.name}/${chatbot.project_name}/${user.userName} ; npm run generateBotium && npm run emulator"`, (err, stdout, stderr) => {
                                 if (err)
                                     console.log(err);
                             });
