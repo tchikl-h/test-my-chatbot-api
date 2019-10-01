@@ -3,7 +3,7 @@ import CompanyModel from "../../models/company";
 
 /**
 * Patch companies
-* url : http://localhost:8080/v1/companies/1 {"companyName": "Apple", "companyDescription": "Awesome Description"}
+* url : http://localhost:8080/v1/companies/1 {"companyName": "Apple", "companyDescription": "Awesome Description", "premium": true}
 */
 export default function patchCompanies(req: Request, res: Response, next: NextFunction) {
     CompanyModel.findOne({
