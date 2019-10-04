@@ -28,7 +28,7 @@ services:
        - /src:/home/herve/repo/test-my-chatbot-api
     # port make it available outside the container AND server
     ports:
-      - "3001:8080"
+      - "3002:8080"
     command: bash -c "sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all && npm run start"
     environment:
       - VIRTUAL_HOST=staging.api.test-my-chatbot.com
