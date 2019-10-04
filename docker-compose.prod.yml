@@ -32,7 +32,7 @@ services:
       - VIRTUAL_HOST=api.test-my-chatbot.com
       - LETSENCRYPT_HOST=api.test-my-chatbot.com
       - LETSENCRYPT_EMAIL=herve.tchikladze@epitech.eu
-      - NODE_ENV=prod
+      - NODE_ENV=production
     networks:
       - default
 

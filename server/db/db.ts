@@ -1,5 +1,5 @@
-// const dotenv = require('dotenv');
-// dotenv.config({path: __dirname + '/.env'})
+const dotenv = require('dotenv');
+dotenv.config()
 import { Request, Response, NextFunction } from "express";
 import {Sequelize} from 'sequelize-typescript';
 import CompanyModel from "../models/company";

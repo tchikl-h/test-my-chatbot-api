@@ -1,0 +1,26 @@
+{
+  "development": {
+    "username": "HNpyW72ct6p2DQgg",
+    "password": "xXSEnMwaUx9CGEMg8gZq",
+    "database": "local_test_my_chatbot",
+    "host": "127.0.0.2",
+    "port": "5432",
+    "dialect": "postgres"
+  },
+  "staging": {
+    "username": "mdW4NrBSSt4c77Xv",
+    "password": "NgV4G2WbC2qXgzWEyxjH",
+    "database": "staging_test_my_chatbot",
+    "host": "test_my_chatbot_db_staging",
+    "port": "5432",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "TWvcA5vb2ejE6e8x",
+    "password": "7rFqu5yLwCMYLfeg4c5q",
+    "database": "prod_test_my_chatbot",
+    "host": "test_my_chatbot_db_prod",
+    "port": "5432",
+    "dialect": "postgres"
+  }
+}
