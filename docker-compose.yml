@@ -9,9 +9,9 @@ services:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASS}
     volumes:
-       - ./postgresql:/var/lib/postgresql/10/main
+       - /var/lib/postgresql/10/main:./postgresql
     ports:
-      - "5431:5432"
+      - "5430:5432"
     networks:
       - default
     restart: always
@@ -25,10 +25,10 @@ services:
     environment:
       - NODE_ENV=development
     volumes:
-       - /src:/home/herve/repo/test-my-chatbot-api
+       - /home/herve/repo/test-my-chatbot-api:/src
     # port make it available outside the container AND server
     ports:
-      - "3001:8080"
+      - "3002:8080"
     command: bash -c "sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all && npm run start"
     networks:
       - default
