@@ -1,5 +1,10 @@
 import * as dotenv from "dotenv";
-dotenv.config({path: __dirname + '/.env'})
+if (process.env.NODE_ENV === 'staging')
+    dotenv.config({path: __dirname + '/.env.docker.staging'})
+else if (process.env.NODE_ENV === 'production')
+    dotenv.config({path: __dirname + '/.env.docker.prod'})
+else
+    dotenv.config({path: __dirname + '/.env.docker'})
 import * as express from "express";
 import { Application } from "express";
 import { NextFunction, Request, Response, Router } from "express";

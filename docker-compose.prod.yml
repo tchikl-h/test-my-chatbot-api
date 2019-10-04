@@ -1,0 +1,42 @@
+version: "3.5"
+
+services:
+  test_my_chatbot_db_prod:
+    container_name: test_my_chatbot_db_prod
+    image: postgres
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+    volumes:
+       - ./postgresql:/var/lib/postgresql/10/main
+    ports:
+      - "5431:5432"
+    networks:
+      - default
+    restart: always
+
+  test_my_chatbot_api_prod:
+    build:
+      context: .
+      dockerfile: Dockerfile-prod
+    container_name: test_my_chatbot_api_prod
+    restart: on-failure
+    volumes:
+       - /src:/home/herve/repo/test-my-chatbot-api
+    # port make it available outside the container AND server
+    ports:
+      - "3001:8080"
+    command: bash -c "sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all && npm run start"
+    environment:
+      - VIRTUAL_HOST=api.test-my-chatbot.com
+      - LETSENCRYPT_HOST=api.test-my-chatbot.com
+      - LETSENCRYPT_EMAIL=herve.tchikladze@epitech.eu
+      - NODE_ENV=prod
+    networks:
+      - default
+
+networks:
+  default:
+    external:
+      name: webproxy

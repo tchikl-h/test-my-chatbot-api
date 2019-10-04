@@ -65,3 +65,7 @@ typings/
 
 #js files
 built
+
+.env*
+
+./db-mock/configs/config.json
