@@ -2,14 +2,14 @@ version: "3.5"
 
 services:
   test_my_chatbot_db:
-    container_name: test_my_chatbot_db
+    container_name: "localhost:5430"
     image: postgres
     environment:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASS}
     volumes:
-       - /var/lib/postgresql/10/main:./postgresql
+       - /var/lib/postgresql/10/main:/src/postgresql
     ports:
       - "5430:5432"
     networks:
@@ -20,12 +20,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: test_my_chatbot_api
+    container_name: "localhost:3002"
     restart: on-failure
     environment:
       - NODE_ENV=development
     volumes:
-       - /home/herve/repo/test-my-chatbot-api:/src
+       - /home/test-my-chatbot-api:/src
     # port make it available outside the container AND server
     ports:
       - "3002:8080"

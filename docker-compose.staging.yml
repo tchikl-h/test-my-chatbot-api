@@ -2,14 +2,14 @@ version: "3.5"
 
 services:
   test_my_chatbot_db_staging:
-    container_name: test_my_chatbot_db_staging
+    container_name: staging.db.test-my-chatbot.com
     image: postgres
     environment:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASS}
     volumes:
-       - /var/lib/postgresql/10/main:./postgresql
+       - /var/lib/postgresql/10/main:/src/postgresql
     ports:
       - "5431:5432"
     networks:
@@ -22,10 +22,10 @@ services:
       dockerfile: Dockerfile-staging
     depends_on:
       - "test_my_chatbot_db_staging"
-    container_name: test_my_chatbot_api_staging
+    container_name: staging.api.test-my-chatbot.com
     restart: on-failure
     volumes:
-       - /home/herve/repo/test-my-chatbot-api:/src
+       - /home/test-my-chatbot-api:/src
     # port make it available outside the container AND server
     ports:
       - "3003:8080"
