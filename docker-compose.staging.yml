@@ -29,7 +29,7 @@ services:
     # port make it available outside the container AND server
     ports:
       - "3003:8080"
-    command: bash -c "sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all && npm run start"
+    command: bash -c "npm install && npm run build && ./node_modules/sequelize-cli-typescript/lib/sequelize db:migrate:undo:all && ./node_modules/sequelize-cli-typescript/lib/sequelize db:migrate && ./node_modules/sequelize-cli-typescript/lib/sequelize db:seed:all && npm run start" # sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all && npm run start ||| npm install && npm run build && ./node_modules/sequelize-cli-typescript/lib/sequelize db:migrate:undo:all && ./node_modules/sequelize-cli-typescript/lib/sequelize db:migrate && ./node_modules/sequelize-cli-typescript/lib/sequelize db:seed:all && npm run start
     environment:
       - VIRTUAL_HOST=staging.api.test-my-chatbot.com
       - LETSENCRYPT_HOST=staging.api.test-my-chatbot.com
