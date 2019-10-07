@@ -9,7 +9,7 @@ services:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASS}
     volumes:
-       - /var/lib/postgresql/10/main:/src/postgresql
+       - /var/lib/postgresql/${POSTGRES_VERSION}/main:/src/postgresql
     ports:
       - "5433:5432"
     networks:
@@ -23,7 +23,7 @@ services:
     container_name: api.test-my-chatbot.com
     restart: on-failure
     volumes:
-       - /home/test-my-chatbot-api:/src
+       - ${REPO_PATH}/test-my-chatbot-api:/src
     # port make it available outside the container AND server
     ports:
       - "3004:8080"

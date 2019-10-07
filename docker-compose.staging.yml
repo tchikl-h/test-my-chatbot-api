@@ -9,7 +9,7 @@ services:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASS}
     volumes:
-       - /var/lib/postgresql/10/main:/src/postgresql
+       - /var/lib/postgresql/${POSTGRES_VERSION}/main:/src/postgresql
     ports:
       - "5431:5432"
     networks:
@@ -20,8 +20,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile-staging
-    links:
-      - test_my_chatbot_db_staging
     depends_on:
       - "test_my_chatbot_db_staging"
     container_name: staging.api.test-my-chatbot.com
