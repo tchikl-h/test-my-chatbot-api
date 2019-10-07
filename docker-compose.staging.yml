@@ -20,12 +20,14 @@ services:
     build:
       context: .
       dockerfile: Dockerfile-staging
+    links:
+      - test_my_chatbot_db_staging
     depends_on:
       - "test_my_chatbot_db_staging"
     container_name: staging.api.test-my-chatbot.com
     restart: on-failure
     volumes:
-       - /home/test-my-chatbot-api:/src
+       - ${REPO_PATH}/test-my-chatbot-api:/src
     # port make it available outside the container AND server
     ports:
       - "3003:8080"
