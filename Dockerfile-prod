@@ -1,4 +1,5 @@
 FROM node:12-slim
+RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
 WORKDIR /src
 COPY . /src

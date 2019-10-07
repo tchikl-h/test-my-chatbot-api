@@ -20,6 +20,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile-prod
+    depends_on:
+      - "test_my_chatbot_db_prod"
     container_name: api.test-my-chatbot.com
     restart: on-failure
     volumes:
