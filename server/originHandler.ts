@@ -2,9 +2,7 @@ export default class OriginHandler {
     public origin: string;
 
     public initCorsOptions(): any {
-        const whitelist = ["http://localhost:3000", "http://dev.loukoum.io", "https://dev.loukoum.io",
-        "http://loukoum.io", "https://loukoum.io", "chrome-extension://obeejmljgfhbmhngkoopbhcchdjicebk",
-        "chrome-extension://jhdanjahcoaljodnfjfmmejjfedpmmjp", "http://admin.loukoum.io", "https://admin.loukoum.io"];
+        const whitelist = ["http://localhost:3000", "https://staging.dashboard.test-my-chatbot.com/", "http://dashboard.test-my-chatbot.com/", "http://localhost:8081"];
         const corsOptions = {
             credentials: true,
             methods: "GET,HEAD,PUT,PATCH,POST,DELETE",

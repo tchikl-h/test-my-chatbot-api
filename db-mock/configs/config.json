@@ -3,7 +3,7 @@
     "username": "HNpyW72ct6p2DQgg",
     "password": "xXSEnMwaUx9CGEMg8gZq",
     "database": "local_test_my_chatbot",
-    "host": "127.0.0.2",
+    "host": "127.0.0.1",
     "port": "5432",
     "dialect": "postgres"
   },
