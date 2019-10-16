@@ -26,6 +26,7 @@ services:
     restart: on-failure
     volumes:
        - ${REPO_PATH}/test-my-chatbot-api:/src
+       - /var/run/docker.sock:/var/run/docker.sock
     # port make it available outside the container AND server
     ports:
       - "3003:8080"
@@ -35,6 +36,7 @@ services:
       - LETSENCRYPT_HOST=staging.api.test-my-chatbot.com
       - LETSENCRYPT_EMAIL=herve.tchikladze@epitech.eu
       - NODE_ENV=staging
+      - HOST=https://staging.dashboard.test-my-chatbot.com
     networks:
       - default
 
