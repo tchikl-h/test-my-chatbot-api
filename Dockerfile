@@ -14,5 +14,3 @@ RUN npm run build
 RUN npm install -g n
 
 RUN n 8.10.0 
-
-ENV HOST 0.0.0.0
