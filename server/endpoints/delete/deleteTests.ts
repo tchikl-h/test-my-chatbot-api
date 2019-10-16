@@ -50,8 +50,8 @@ export default function deleteTests(req: Request, res: Response, next: NextFunct
                 res.status(500).send(err)
             })
             .then((user: UserModel) => {
-                exec(`docker start $(docker ps -aqf "name=${test.chatbot.company.name}_${test.chatbot.project_name}_${user.userName}")`, (err, stdout, stderr) => {
-                    exec(`docker exec -d $(docker ps -aqf "name=${test.chatbot.company.name}_${test.chatbot.project_name}_${user.userName}") sh -c "rm /home/botium-bindings/samples/botframework/spec/convo/${test.name}.convo.txt"`, (err, stdout, stderr) => {
+                exec(`docker start $(docker ps -aqf "name=${process.env.NODE_ENV}_${test.chatbot.company.name}_${test.chatbot.project_name}_${user.userName}")`, (err, stdout, stderr) => {
+                    exec(`docker exec -d $(docker ps -aqf "name=${process.env.NODE_ENV}_${test.chatbot.company.name}_${test.chatbot.project_name}_${user.userName}") sh -c "rm /home/botium-bindings/samples/botframework/spec/convo/${test.name}.convo.txt"`, (err, stdout, stderr) => {
                         res.status(200).send();
                     });
                 });

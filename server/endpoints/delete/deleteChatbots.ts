@@ -49,13 +49,13 @@ export default function deleteChatbots(req: Request, res: Response, next: NextFu
             })
             .then((users: UserModel[]) => {
                 // TODO: properly delete the spec/convo/* when the chatbot is being deleted
-                console.log(`docker start $(docker ps -aqf "name=${chatbot.company.name}_${chatbot.project_name}_${users[0].userName}")`);
-                exec(`docker start $(docker ps -aqf "name=${chatbot.company.name}_${chatbot.project_name}_${users[0].userName}")`, (err, stdout, stderr) => {
-                    console.log(`docker exec -d $(docker ps -aqf "name=${chatbot.company.name}_${chatbot.project_name}_${users[0].userName}") sh -c "rm /home/botium-bindings/samples/botframework/spec/convo/*"`);
-                    exec(`docker exec -d $(docker ps -aqf "name=${chatbot.company.name}_${chatbot.project_name}_${users[0].userName}") sh -c "rm /home/botium-bindings/samples/botframework/spec/convo/*"`, (err, stdout, stderr) => {
+                console.log(`docker start $(docker ps -aqf "name=${process.env.NODE_ENV}_${chatbot.company.name}_${chatbot.project_name}_${users[0].userName}")`);
+                exec(`docker start $(docker ps -aqf "name=${process.env.NODE_ENV}_${chatbot.company.name}_${chatbot.project_name}_${users[0].userName}")`, (err, stdout, stderr) => {
+                    console.log(`docker exec -d $(docker ps -aqf "name=${process.env.NODE_ENV}_${chatbot.company.name}_${chatbot.project_name}_${users[0].userName}") sh -c "rm /home/botium-bindings/samples/botframework/spec/convo/*"`);
+                    exec(`docker exec -d $(docker ps -aqf "name=${process.env.NODE_ENV}_${chatbot.company.name}_${chatbot.project_name}_${users[0].userName}") sh -c "rm /home/botium-bindings/samples/botframework/spec/convo/*"`, (err, stdout, stderr) => {
                         let containerIds = "";
                         users.forEach(user => {
-                            containerIds = containerIds + ` $(docker ps -aqf "name=${user.company.name}_${chatbot.project_name}_${user.userName}") `;
+                            containerIds = containerIds + ` $(docker ps -aqf "name=${process.env.NODE_ENV}_${user.company.name}_${chatbot.project_name}_${user.userName}") `;
                         })
                         exec(`docker stop ${containerIds} && docker rm ${containerIds}`, (err, stdout, stderr) => {
                             console.log(err);

@@ -34,9 +34,9 @@ export default function launchTestForChabtot(req: Request, res: Response, next: 
             res.status(500).send(err)
         })
         .then((user: UserModel) => {
-            exec(`docker start $(docker ps -aqf "name=${chatbot.company.name}_${chatbot.project_name}_${user.userName}")`, (err, stdout, stderr) => {
+            exec(`docker start $(docker ps -aqf "name=${process.env.NODE_ENV}_${chatbot.company.name}_${chatbot.project_name}_${user.userName}")`, (err, stdout, stderr) => {
                 var now = new Date().toISOString().substr(0, 19);
-                exec(`docker exec -d $(docker ps -aqf "name=${chatbot.company.name}_${chatbot.project_name}_${user.userName}") sh -c "cd /home/botium-bindings/samples/botframework && npm run test > logs/${chatbot.company.name}/${chatbot.project_name}/${user.userName}/${now}"`, (err, stdout, stderr) => { // /logs/Amazon/Jojo/rsmith/2019-08-31_13:34:23
+                exec(`docker exec -d $(docker ps -aqf "name=${process.env.NODE_ENV}_${chatbot.company.name}_${chatbot.project_name}_${user.userName}") sh -c "cd /home/botium-bindings/samples/botframework && npm run test > logs/${chatbot.company.name}/${chatbot.project_name}/${user.userName}/${now}"`, (err, stdout, stderr) => { // /logs/Amazon/Jojo/rsmith/2019-08-31_13:34:23
                     res.status(200).send();
                 });
             });
