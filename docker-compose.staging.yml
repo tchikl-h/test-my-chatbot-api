@@ -27,7 +27,6 @@ services:
     volumes:
        - ${REPO_PATH}/test-my-chatbot-api:/src
        - /var/run/docker.sock:/var/run/docker.sock
-    # port make it available outside the container AND server
     ports:
       - "3003:8080"
     command: bash -c "npm install && npm run build && ./node_modules/sequelize-cli-typescript/lib/sequelize db:migrate:undo:all && ./node_modules/sequelize-cli-typescript/lib/sequelize db:migrate && ./node_modules/sequelize-cli-typescript/lib/sequelize db:seed:all && npm run start" # sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all && npm run start ||| npm install && npm run build && ./node_modules/sequelize-cli-typescript/lib/sequelize db:migrate:undo:all && ./node_modules/sequelize-cli-typescript/lib/sequelize db:migrate && ./node_modules/sequelize-cli-typescript/lib/sequelize db:seed:all && npm run start

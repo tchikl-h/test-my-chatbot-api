@@ -26,7 +26,7 @@ services:
     restart: on-failure
     volumes:
        - ${REPO_PATH}/test-my-chatbot-api:/src
-    # port make it available outside the container AND server
+       - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - "3004:8080"
     command: bash -c "sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all && npm run start"
@@ -35,6 +35,7 @@ services:
       - LETSENCRYPT_HOST=api.test-my-chatbot.com
       - LETSENCRYPT_EMAIL=herve.tchikladze@epitech.eu
       - NODE_ENV=production
+      - HOST=https://dashboard.test-my-chatbot.com
     networks:
       - default
 
