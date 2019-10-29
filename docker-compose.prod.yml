@@ -25,7 +25,7 @@ services:
     container_name: api.test-my-chatbot.com
     restart: on-failure
     volumes:
-       - ${REPO_PATH}/test-my-chatbot-api:/src
+       - ${REPO_PATH}:/src
        - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - "3004:8080"
