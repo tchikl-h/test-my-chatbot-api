@@ -11,6 +11,7 @@ export { default as getDecryptPassword } from "./get/getDecryptPassword";
 export { default as startChatbot } from "./get/startChatbot";
 export { default as stopChatbot } from "./get/stopChatbot";
 export { default as launchTestForChatbot } from "./get/launchTestForChatbot";
+export { default as updateContainers } from "./get/updateContainers";
 
 export { default as postCompanies } from "./post/postCompanies";
 export { default as postChatbots } from "./post/postChatbots";
