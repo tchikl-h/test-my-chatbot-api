@@ -40,6 +40,8 @@ export default function postChatbots(req: Request, res: Response, next: NextFunc
             res.status(500).send(err)
         })
         .then((user: UserModel) => {
+            if (!user.chatbotIds)
+                user.chatbotIds = [];
             let newChatbotIds = user.chatbotIds;
             newChatbotIds.push(chatbot.id);
             UserModel.update({

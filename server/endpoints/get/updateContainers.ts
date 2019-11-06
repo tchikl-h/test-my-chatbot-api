@@ -35,7 +35,7 @@ export default function updateContainer(req: Request, res: Response, next: NextF
                             exec(`docker rm ${stdout}`, (err, stdout, stderr) => {
                                 console.log(`docker rm ${stdout}`);
                                 let users_mail = users.map(user => {
-                                    if (user.chatbotIds.includes(chatbot.id))
+                                    if (user.chatbotIds && user.chatbotIds.includes(chatbot.id))
                                         return user.mail
                                 }).join(";");
                                 let crontab = "(echo '0 *" + (chatbot.periodic_build !== null ? `/${chatbot.periodic_build}` : "") + " * * * cd /home/botium-bindings/samples/botframework && npm run test >/dev/null 2>&1') | crontab - ; ";

@@ -26,9 +26,11 @@ export default function getChatbotsByUser(req: Request, res: Response, next: Nex
     })
     .then((user: UserModel) => {
         let Allowedchatbots = user.company.chatbots.filter((chatbot) => {
-            for(let i = 0; i < user.chatbotIds.length; i++) {
-                if (chatbot.id === user.chatbotIds[i]) {
-                    return chatbot;
+            if (user.chatbotIds) {
+                for(let i = 0; i < user.chatbotIds.length; i++) {
+                    if (chatbot.id === user.chatbotIds[i]) {
+                        return chatbot;
+                    }
                 }
             }
         })

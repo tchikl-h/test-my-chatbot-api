@@ -3,6 +3,7 @@ export { default as getChatbots } from "./get/getChatbots";
 export { default as getUsers } from "./get/getUsers";
 export { default as getChatbotsByCompany } from "./get/getChatbotsByCompany";
 export { default as getUsersByCompany } from "./get/getUsersByCompany";
+export { default as getUserById } from "./get/getUserById";
 export { default as getChatbotsByUser } from "./get/getChatbotsByUser";
 export { default as getTestsByChatbot } from "./get/getTestsByChatbot";
 export { default as getTests } from "./get/getTests";

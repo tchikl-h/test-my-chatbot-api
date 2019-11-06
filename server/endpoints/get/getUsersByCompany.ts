@@ -13,11 +13,11 @@ export default function getUserByCompany(req: Request, res: Response, next: Next
             id: req.params.id
         }
     })
+    .then((company: CompanyModel) => {
+        res.status(200).send(company.users);
+    })
     .catch((err) => {
         console.log(err)
         res.status(500).send(err)
-    })
-    .then((company: CompanyModel) => {
-        res.status(200).send(company.users);
     })
 }

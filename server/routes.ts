@@ -15,6 +15,7 @@ export default class Routes {
             '/tests': endpoints.getTests,
             '/encrypt/:toEncrypt': endpoints.getEncryptPassword,
             '/decrypt/:toDecrypt': endpoints.getDecryptPassword,
+            '/companies/:companyId/users/:userId': endpoints.getUserById,
             '/companies/:companyId/users/:userId/chatbots/:chatbotId/start': endpoints.startChatbot,
             '/companies/:companyId/users/:userId/chatbots/:chatbotId/stop': endpoints.stopChatbot,
             '/companies/:companyId/users/:userId/chatbots/:chatbotId/launch': endpoints.launchTestForChatbot,
