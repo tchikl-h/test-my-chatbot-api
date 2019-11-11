@@ -25,15 +25,20 @@ export default function getChatbotsByUser(req: Request, res: Response, next: Nex
         res.status(500).send(err)
     })
     .then((user: UserModel) => {
-        let Allowedchatbots = user.company.chatbots.filter((chatbot) => {
-            if (user.chatbotIds) {
-                for(let i = 0; i < user.chatbotIds.length; i++) {
-                    if (chatbot.id === user.chatbotIds[i]) {
-                        return chatbot;
+        if (user) {
+            let Allowedchatbots = user.company.chatbots.filter((chatbot) => {
+                if (user.chatbotIds) {
+                    for(let i = 0; i < user.chatbotIds.length; i++) {
+                        if (chatbot.id === user.chatbotIds[i]) {
+                            return chatbot;
+                        }
                     }
                 }
-            }
-        })
-        res.status(200).send(Allowedchatbots);
+            })
+            res.status(200).send(Allowedchatbots);
+        }
+        else {
+            res.status(404).send({msg: "User doesn't exist"});
+        }
     })
 }
