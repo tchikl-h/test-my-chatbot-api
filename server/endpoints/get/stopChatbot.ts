@@ -33,7 +33,7 @@ export default function stopChatbot(req: Request, res: Response, next: NextFunct
         .then((user: UserModel) => {
             console.log("STOP !")
             // TODO: check if the chatbot is not already stopped (to avoid refresh on the register-test page => stuck)
-            exec(`docker stop $(docker ps -aqf "name=${process.env.NODE_ENV}_${chatbot.company.name}_${chatbot.project_name}_${user.userName}")`, (err, stdout, stderr) => {
+            exec(`docker stop $(docker ps -aqf "name=${process.env.NODE_ENV}_${chatbot.company.name.split(" ").join("-")}_${chatbot.project_name}_${user.userName}")`, (err, stdout, stderr) => {
                 console.log(err);
             });
             res.status(200).send();
