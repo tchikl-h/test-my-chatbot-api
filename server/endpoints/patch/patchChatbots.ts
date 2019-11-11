@@ -57,7 +57,7 @@ export default function patchChatbots(req: Request, res: Response, next: NextFun
             .then((users: UserModel[]) => {
                 users.forEach((user, index) => {
                     let crontab = "(echo '0 *" + (prevChatbot.periodic_build !== null ? `/${prevChatbot.periodic_build}` : "") + " * * * cd /home/botium-bindings/samples/botframework && npm run test >/dev/null 2>&1') | crontab - ; ";
-                    exec(`docker exec -d $(docker ps -aqf "name=${process.env.NODE_ENV}_${prevchatbot.company.name.split(" ").join("-")}_${prevChatbot.project_name}_${users[0].userName}") sh -c ""`, (err, stdout, stderr) => {
+                    exec(`docker exec -d $(docker ps -aqf "name=${process.env.NODE_ENV}_${prevChatbot.company.name.split(" ").join("-")}_${prevChatbot.project_name}_${users[0].userName}") sh -c ""`, (err, stdout, stderr) => {
                         if (err)
                             console.log(err);
                     });
