@@ -35,9 +35,6 @@ import {
     description: string;
 
     @Column
-    container_mode: string;
-
-    @Column
     dialogflow_project_id: string;
     
     @Column

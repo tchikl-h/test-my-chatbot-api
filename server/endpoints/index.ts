@@ -11,11 +11,8 @@ export { default as getAssertions } from "./get/getAssertions";
 export { default as getAssertionsByTest } from "./get/getAssertionsByTest";
 export { default as getEncryptPassword } from "./get/getEncryptPassword";
 export { default as getDecryptPassword } from "./get/getDecryptPassword";
-export { default as startChatbot } from "./get/startChatbot";
-export { default as stopChatbot } from "./get/stopChatbot";
 export { default as talkChatbot } from "./get/talkChatbot";
 export { default as launchTestForChatbot } from "./get/launchTestForChatbot";
-export { default as updateContainers } from "./get/updateContainers";
 
 export { default as postCompanies } from "./post/postCompanies";
 export { default as postChatbots } from "./post/postChatbots";

@@ -1,10 +1,5 @@
 import { Request, Response, NextFunction } from "express";
 import AssertionModel from "../../models/assertion";
-import TestModel from "../../models/test";
-import UserModel from "../../models/user";
-import CompanyModel from "../../models/company";
-import { exec } from 'child_process';
-import { equal } from "assert";
 
 /**
 * Delete assertions

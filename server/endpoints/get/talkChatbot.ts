@@ -1,8 +1,5 @@
 import { Request, Response, NextFunction } from "express";
 import ChatbotModel from "../../models/chatbot";
-import UserModel from "../../models/user";
-import CompanyModel from "../../models/company";
-import { exec } from 'child_process';
 import axios from "axios";
 
 /**
