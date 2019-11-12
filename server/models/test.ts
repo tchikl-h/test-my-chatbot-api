@@ -1,52 +1,56 @@
 import {
-    AutoIncrement,
-    Column,
-    CreatedAt, DataType,
-    DeletedAt, ForeignKey,
-    Model,
-    PrimaryKey,
-    Table, Unique,
-    UpdatedAt,
-    BelongsTo,
-    HasOne,
-    HasMany
-  } from 'sequelize-typescript';
+  AutoIncrement,
+  Column,
+  CreatedAt, DataType,
+  DeletedAt, ForeignKey,
+  Model,
+  PrimaryKey,
+  Table, Unique,
+  UpdatedAt,
+  BelongsTo,
+  HasOne,
+  HasMany
+} from 'sequelize-typescript';
 
-  import Chatbot from './chatbot';
-  
-  @Table({
-    tableName: "test",
-    paranoid: true,
-    timestamps: true,
-    underscored: true,
-    charset: "utf8mb4"
-  })
-  export default class Test extends Model<Test> {
-  
-    @PrimaryKey
-    @AutoIncrement
-    @Column
-    id: number;
-  
-    @Column
-    name: string;
+import Chatbot from './chatbot';
+import Assertion from './assertion';
 
-    @Column
-    description: string;
+@Table({
+  tableName: "test",
+  paranoid: true,
+  timestamps: true,
+  underscored: true,
+  charset: "utf8mb4"
+})
+export default class Test extends Model<Test> {
 
-    @ForeignKey(() => Chatbot)
-    @Column
-    chatbotId: number;
+  @PrimaryKey
+  @AutoIncrement
+  @Column
+  id: number;
 
-    @BelongsTo(() => Chatbot)
-    chatbot: Chatbot;
-    
-    @CreatedAt
-    created_at: Date;
+  @Column
+  name: string;
+
+  @Column
+  description: string;
+
+  @HasMany(() => Assertion)
+  assertions: Assertion[];
+
+  @ForeignKey(() => Chatbot)
+  @Column
+  chatbotId: number;
+
+  @BelongsTo(() => Chatbot)
+  chatbot: Chatbot;
   
-    @UpdatedAt
-    date_update: Date;
-  
-    @DeletedAt
-    deleted_at: Date;
-  }
+  @CreatedAt
+  created_at: Date;
+
+  @UpdatedAt
+  date_update: Date;
+
+  @DeletedAt
+  deleted_at: Date;
+}

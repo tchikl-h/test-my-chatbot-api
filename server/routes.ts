@@ -13,6 +13,8 @@ export default class Routes {
             '/users': endpoints.getUsers,
             '/chatbots': endpoints.getChatbots,
             '/tests': endpoints.getTests,
+            '/assertions': endpoints.getAssertions,
+            '/tests/:id/assertions': endpoints.getAssertionsByTest,
             '/encrypt/:toEncrypt': endpoints.getEncryptPassword,
             '/decrypt/:toDecrypt': endpoints.getDecryptPassword,
             '/companies/:companyId/users/:userId': endpoints.getUserById,
@@ -27,6 +29,7 @@ export default class Routes {
             '/chatbots': endpoints.postChatbots,
             '/users': endpoints.postUsers,
             '/tests': endpoints.postTests,
+            '/assertions': endpoints.postAssertions,
             '/logs': endpoints.postLogs,
         }
 
@@ -35,6 +38,7 @@ export default class Routes {
             '/chatbots/:id': endpoints.deleteChatbots,
             '/users/:id': endpoints.deleteUsers,
             '/users/:userId/tests/:testId': endpoints.deleteTests,
+            '/assertions/:id': endpoints.deleteAssertions,
         }
 
         const routesPatchV1 = {
@@ -42,6 +46,7 @@ export default class Routes {
             '/chatbots/:id': endpoints.patchChatbots,
             '/users/:id': endpoints.patchUsers,
             '/tests/:id': endpoints.patchTests,
+            '/assertions/:id': endpoints.patchAssertions,
         }
 
         // Setup routes get
