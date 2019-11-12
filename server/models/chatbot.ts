@@ -49,6 +49,9 @@ import {
     @Column
     periodic_build: number;
 
+    @Column
+    webhook_url: string;
+
     @HasMany(() => Test)
     tests: Test[];
 

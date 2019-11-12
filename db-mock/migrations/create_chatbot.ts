@@ -32,6 +32,9 @@ export = {
             periodic_build: {
                 type: Sequelize.INTEGER
             },
+            webhook_url: {
+                type: Sequelize.TEXT
+            },
             companyId: {
                 type: Sequelize.INTEGER
             },

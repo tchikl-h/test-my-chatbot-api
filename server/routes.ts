@@ -20,6 +20,7 @@ export default class Routes {
             '/companies/:companyId/users/:userId': endpoints.getUserById,
             '/companies/:companyId/users/:userId/chatbots/:chatbotId/start': endpoints.startChatbot,
             '/companies/:companyId/users/:userId/chatbots/:chatbotId/stop': endpoints.stopChatbot,
+            '/companies/:companyId/users/:userId/chatbots/:chatbotId/talk': endpoints.talkChatbot,
             '/companies/:companyId/users/:userId/chatbots/:chatbotId/launch': endpoints.launchTestForChatbot,
             '/chatbots/update': endpoints.updateContainers,
         }
