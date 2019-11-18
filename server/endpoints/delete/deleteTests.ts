@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import TestModel from "../../models/test";
 
 /**
+* TODO: replace  /users/ by /chatbots/
 * Delete tests
 * url : http://localhost:8080/v1/users/1/test/1
 */

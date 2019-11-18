@@ -3,14 +3,13 @@ import AssertionModel from "../../models/assertion";
 
 /**
 * Post assertions
-* url : http://localhost:8080/v1/assertions {"userInput": "Hello", "chatbotResponse": "Hi :)", "intent": "Welcome", "error": null, "testId": "1"}
+* url : http://localhost:8080/v1/assertions {"userInput": "Hello", "chatbotResponse": "Hi :)", "intent": "Welcome", "testId": "1"}
 */
 export default function postAssertions(req: Request, res: Response, next: NextFunction) {
     AssertionModel.create({
         userInput: req.body.userInput,
         chatbotResponse: req.body.chatbotResponse,
         intent: req.body.intent,
-        error: req.body.error,
         testId: parseInt(req.body.testId),
         created_at: new Date(),
         date_update: new Date(),

@@ -25,6 +25,37 @@ export default function postChatbots(req: Request, res: Response, next: NextFunc
         res.status(500).send(err)
     })
     .then((chatbot: ChatbotModel) => {
-        res.status(200).send();
+        // add the new chatbotId in the chatbotIds of the companyOwner
+        UserModel.findOne({
+            where: {
+                companyOwner: true,
+                companyId: chatbot.companyId
+            }
+        })
+        .catch((err) => {
+            console.log(err)
+            res.status(500).send(err)
+        })
+        .then((user: UserModel) => {
+            if (!user.chatbotIds)
+                user.chatbotIds = [];
+            let newChatbotIds = user.chatbotIds;
+            newChatbotIds.push(chatbot.id);
+            UserModel.update({
+                chatbotIds: newChatbotIds,
+                date_update: new Date()
+            }, {
+                where : {
+                    id: user.id,
+                }
+            })
+            .catch((err) => {
+                console.log(err)
+                res.status(500).send(err)
+            })
+            .then(() => {
+                res.status(200).send();
+            });
+        });
     })
 }

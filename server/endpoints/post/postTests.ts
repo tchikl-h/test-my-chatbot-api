@@ -20,7 +20,7 @@ export default function postTests(req: Request, res: Response, next: NextFunctio
         console.log(err)
         res.status(500).send(err)
     })
-    .then(() => {
-        res.status(200).send();
+    .then((test) => {
+        res.status(200).send(test);
     })
 }

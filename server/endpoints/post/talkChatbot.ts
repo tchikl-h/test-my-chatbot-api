@@ -6,7 +6,8 @@ import axios from "axios";
 * Talk with the chatbot
 * url : http://localhost:8080/v1/companies/1/users/1/chatbots/1/talk {msg: "Hello"}
 */
-export default function registerTest(req: Request, res: Response, next: NextFunction) {
+export default function TalkChatbot(req: Request, res: Response, next: NextFunction) {
+    console.log(req.body);
     ChatbotModel.findOne({
         where: {
             id: req.params.chatbotId,

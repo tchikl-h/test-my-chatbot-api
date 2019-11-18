@@ -18,7 +18,6 @@ export default class Routes {
             '/encrypt/:toEncrypt': endpoints.getEncryptPassword,
             '/decrypt/:toDecrypt': endpoints.getDecryptPassword,
             '/companies/:companyId/users/:userId': endpoints.getUserById,
-            '/companies/:companyId/users/:userId/chatbots/:chatbotId/talk': endpoints.talkChatbot,
             '/companies/:companyId/users/:userId/chatbots/:chatbotId/launch': endpoints.launchTestForChatbot,
         }
 
@@ -29,6 +28,7 @@ export default class Routes {
             '/tests': endpoints.postTests,
             '/assertions': endpoints.postAssertions,
             '/logs': endpoints.postLogs,
+            '/companies/:companyId/users/:userId/chatbots/:chatbotId/talk': endpoints.talkChatbot,
         }
 
         const routesDeleteV1 = {
