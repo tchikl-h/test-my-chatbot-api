@@ -6,22 +6,28 @@ import {
 
 export = {
     up: (queryInterface: QueryInterface, Sequelize: SequelizeStatic) => {
-        return queryInterface.createTable('test', {
+        return queryInterface.createTable('assertion', {
             id: {
                 autoIncrement: true,
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
-            name: {
+            order: {
+                type: Sequelize.INTEGER,
+            },
+            userInput: {
                 type: Sequelize.STRING,
             },
-            description: {
+            chatbotResponse: {
+                type: Sequelize.STRING,
+            },
+            intent: {
                 type: Sequelize.STRING,
             },
             error: {
-                type: Sequelize.BOOLEAN,
+                type: Sequelize.STRING,
             },
-            chatbotId: {
+            testId: {
                 type: Sequelize.INTEGER,
             },
             created_at: {
@@ -37,6 +43,6 @@ export = {
     },
 
     down: (queryInterface: QueryInterface, Sequelize: SequelizeStatic) => {
-        return queryInterface.dropTable('test');
+        return queryInterface.dropTable('assertion');
     }
 };

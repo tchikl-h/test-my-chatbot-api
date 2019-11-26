@@ -13,7 +13,7 @@ import {
         password: bcrypt.hashSync("guest", bcrypt.genSaltSync(10)),
         mail: "mscott@gmail.com",
         companyOwner: true,
-        chatbotIds: null,
+        chatbotIds: [1],
         companyId: 1,
         created_at: new Date(),
         date_update: new Date(),
