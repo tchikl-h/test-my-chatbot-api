@@ -26,6 +26,9 @@ import {
     @AutoIncrement
     @Column
     id: number;
+
+    @Column
+    order: number;
   
     @Column
     userInput: string;

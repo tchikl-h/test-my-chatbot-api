@@ -12,6 +12,9 @@ export = {
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
+            order: {
+                type: Sequelize.INTEGER,
+            },
             userInput: {
                 type: Sequelize.STRING,
             },

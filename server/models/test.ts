@@ -35,6 +35,9 @@ export default class Test extends Model<Test> {
   @Column
   description: string;
 
+  @Column
+  error: boolean;
+
   @HasMany(() => Assertion)
   assertions: Assertion[];
 

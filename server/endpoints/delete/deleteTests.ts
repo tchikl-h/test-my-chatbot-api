@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import TestModel from "../../models/test";
+import AssertionModel from "../../models/assertion";
 
 /**
 * TODO: replace  /users/ by /chatbots/
@@ -11,6 +12,7 @@ export default function deleteTests(req: Request, res: Response, next: NextFunct
         where: {
             id: req.params.testId,
         },
+        include: [AssertionModel]
     })
     .catch((err) => {
         console.log(err)
@@ -21,6 +23,13 @@ export default function deleteTests(req: Request, res: Response, next: NextFunct
             res.status(404).send(`Not found: resource ${req.params.testId} does not exist for test`)
             return;
         }
+        test.assertions.forEach((assertion) => {
+            AssertionModel.destroy({
+                where: {
+                    id: assertion.id
+                }
+            })
+        })
         TestModel.destroy({
             where: {
                 id: req.params.testId,

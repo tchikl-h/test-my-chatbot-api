@@ -6,6 +6,7 @@ import {
   export = {
     up: (queryInterface: QueryInterface, Sequelize: SequelizeStatic) => {
       return queryInterface.bulkInsert('assertion', [{
+        order: 1,
         userInput: "How are you ?",
         chatbotResponse: "I'm fine, thank you :)",
         intent: "Mood",

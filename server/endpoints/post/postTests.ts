@@ -11,6 +11,7 @@ export default function postTests(req: Request, res: Response, next: NextFunctio
     TestModel.create({
         name: req.body.name,
         description: req.body.description,
+        error: false,
         chatbotId: parseInt(req.body.chatbotId),
         created_at: new Date(),
         date_update: new Date(),

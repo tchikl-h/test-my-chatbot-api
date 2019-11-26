@@ -3,7 +3,7 @@ import ChatbotModel from "../../models/chatbot";
 
 /**
 * Patch chatbots
-* url : http://localhost:8080/v1/chatbots {"projectName": "Chatbot Apple B", "description": "Awesome Description", "containerMode": "Dialogflow", "dialogflowProjectId": 5678987655, "dialogflowClientEmail": "apple@hotmail.fr", "dialogflowPrivateKey": "UY9J8F8EZ7D8D687ZJYEF98Y", "companyId": 4}
+* url : http://localhost:8080/v1/chatbots {"projectName": "Chatbot Apple B", "description": "Awesome Description", "companyId": 4}
 */
 export default function patchChatbots(req: Request, res: Response, next: NextFunction) {
     ChatbotModel.findOne({
@@ -23,9 +23,7 @@ export default function patchChatbots(req: Request, res: Response, next: NextFun
         ChatbotModel.update({
             project_name: req.body.projectName,
             description: req.body.description,
-            dialogflow_project_id: req.body.dialogflowProjectId,
-            dialogflow_client_email: req.body.dialogflowClientEmail,
-            dialogflow_private_key: req.body.dialogflowPrivateKey,
+            webhook_url: req.body.webhook_url,
             periodic_build: req.body.periodicBuild,
             companyId: parseInt(req.body.companyId),
             date_update: new Date()

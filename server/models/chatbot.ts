@@ -35,15 +35,6 @@ import {
     description: string;
 
     @Column
-    dialogflow_project_id: string;
-    
-    @Column
-    dialogflow_client_email: string;
-
-    @Column
-    dialogflow_private_key: string;
-
-    @Column
     periodic_build: number;
 
     @Column

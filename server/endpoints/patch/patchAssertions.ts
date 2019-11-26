@@ -3,7 +3,7 @@ import AssertionModel from "../../models/assertion";
 
 /**
 * Patch assertions
-* url : http://localhost:8080/v1/assertions/:id {"userInput": "Hello", "chatbotResponse": "Hi :)", "intent": "Welcome", "testId": "1"}
+* url : http://localhost:8080/v1/assertions/:id {"orderId": 0, "userInput": "Hello", "chatbotResponse": "Hi :)", "intent": "Welcome", "testId": "1"}
 */
 export default function patchAssertions(req: Request, res: Response, next: NextFunction) {
     AssertionModel.findOne({
@@ -21,10 +21,11 @@ export default function patchAssertions(req: Request, res: Response, next: NextF
             return;
         }
         AssertionModel.update({
-            userInput: req.body.userInput,
-            chatbotResponse: req.body.chatbotResponse,
-            intent: req.body.intent,
-            testId: parseInt(req.params.id),
+            order: req.body.orderId || assertion.order,
+            userInput: req.body.userInput || assertion.userInput,
+            chatbotResponse: req.body.chatbotResponse || assertion.chatbotResponse,
+            intent: req.body.intent || assertion.intent,
+            testId: parseInt(req.body.testId) || assertion.testId,
             date_update: new Date()
         }, {
             where : {

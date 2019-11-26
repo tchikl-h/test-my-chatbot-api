@@ -18,6 +18,9 @@ export = {
             description: {
                 type: Sequelize.STRING,
             },
+            error: {
+                type: Sequelize.BOOLEAN,
+            },
             chatbotId: {
                 type: Sequelize.INTEGER,
             },

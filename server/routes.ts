@@ -18,7 +18,7 @@ export default class Routes {
             '/encrypt/:toEncrypt': endpoints.getEncryptPassword,
             '/decrypt/:toDecrypt': endpoints.getDecryptPassword,
             '/companies/:companyId/users/:userId': endpoints.getUserById,
-            '/companies/:companyId/users/:userId/chatbots/:chatbotId/launch': endpoints.launchTestForChatbot,
+            '/companies/:companyId/users/:userId/chatbots/:chatbotId/tests/:testId/launch': endpoints.launchTestForChatbot,
         }
 
         const routesPostV1 = {
