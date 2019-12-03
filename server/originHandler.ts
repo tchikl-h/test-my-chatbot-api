@@ -2,7 +2,7 @@ export default class OriginHandler {
     public origin: string;
 
     public initCorsOptions(): any {
-        const whitelist = ["http://localhost:3000", "https://staging.dashboard.test-my-chatbot.com", "http://staging.dashboard.test-my-chatbot.com", "https://dashboard.test-my-chatbot.com", "http://dashboard.test-my-chatbot.com"];
+        const whitelist = ["http://localhost:3000", "https://staging.dashboard.test-my-chatbot.com", "http://staging.dashboard.test-my-chatbot.com", "https://dashboard.test-my-chatbot.com", "http://dashboard.test-my-chatbot.com", "http://chatbot.herve-tchikladze.com", "https://chatbot.herve-tchikladze.com"];
         const corsOptions = {
             credentials: true,
             methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
