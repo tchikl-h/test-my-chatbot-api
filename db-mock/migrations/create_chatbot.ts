@@ -17,6 +17,9 @@ export = {
             description: {
                 type: Sequelize.STRING
             },
+            response_url: {
+                type: Sequelize.STRING
+            },
             dialogflow_project_id: {
                 type: Sequelize.STRING
             },

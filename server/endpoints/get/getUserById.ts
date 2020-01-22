@@ -7,7 +7,6 @@ import UserModel from "../../models/user";
  * url : http://localhost:8080/v1/companies/1/users/1
  */
 export default function getUserById(req: Request, res: Response, next: NextFunction) {
-    console.log(req.params);
     CompanyModel.findOne({
         include: [UserModel],
         where: {

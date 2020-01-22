@@ -35,6 +35,9 @@ import {
     description: string;
 
     @Column
+    response_url: string;
+
+    @Column
     periodic_build: number;
 
     @Column

@@ -12,6 +12,7 @@ export { default as getAssertionsByTest } from "./get/getAssertionsByTest";
 export { default as getEncryptPassword } from "./get/getEncryptPassword";
 export { default as getDecryptPassword } from "./get/getDecryptPassword";
 export { default as launchTestForChatbot } from "./get/launchTestForChatbot";
+export { default as launchAllTestForChatbot } from "./get/launchAllTestForChatbot";
 
 export { default as postCompanies } from "./post/postCompanies";
 export { default as postChatbots } from "./post/postChatbots";
@@ -20,6 +21,7 @@ export { default as postTests } from "./post/postTests";
 export { default as postAssertions } from "./post/postAssertions";
 export { default as postLogs } from "./post/postLogs";
 export { default as talkChatbot } from "./post/talkChatbot";
+export { default as responseChatbot } from "./post/responseChatbot";
 
 export { default as deleteCompanies } from "./delete/deleteCompanies";
 export { default as deleteChatbots } from "./delete/deleteChatbots";

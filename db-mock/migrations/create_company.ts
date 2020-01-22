@@ -17,6 +17,9 @@ export = {
             description: {
                 type: Sequelize.STRING,
             },
+            token: {
+                type: Sequelize.STRING,
+            },
             premium: {
                 type: Sequelize.BOOLEAN,
             },

@@ -7,7 +7,6 @@ import * as bcrypt from "bcrypt";
 * url : http://localhost:8080/v1/tests {"name": "Test 1", "description": "description", "chatbotId": 10}
 */
 export default function postTests(req: Request, res: Response, next: NextFunction) {
-    console.log(new Date());
     TestModel.create({
         name: req.body.name,
         description: req.body.description,

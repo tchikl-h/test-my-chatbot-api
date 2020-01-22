@@ -2,12 +2,15 @@ import { Request, Response, NextFunction } from "express";
 import ChatbotModel from "../../models/chatbot";
 import axios from "axios";
 
+const io = require("socket.io-client");
+let socketio = io.connect(process.env.HOST_API);
+
 /**
 * Talk with the chatbot
-* url : http://localhost:8080/v1/companies/1/users/1/chatbots/1/talk {msg: "Hello"}
+* url : http://localhost:8080/v1/companies/1/users/1/chatbots/1/talk {message: "Hello"}
 */
 export default function TalkChatbot(req: Request, res: Response, next: NextFunction) {
-    console.log(req.body);
+    socketio.emit('talk');
     ChatbotModel.findOne({
         where: {
             id: req.params.chatbotId,
@@ -22,9 +25,11 @@ export default function TalkChatbot(req: Request, res: Response, next: NextFunct
             res.status(404).send(`Not found: resource ${req.params.chatbotId} does not exist for chatbot`)
             return;
         }
-        axios.get(`${chatbot.webhook_url}`, {
-            params: {
-                msg: req.body.msg
+        axios({
+            method: 'post',
+            url: chatbot.webhook_url,
+            data: {
+                msg: req.body.message
             }
         })
         .then((response) => {
