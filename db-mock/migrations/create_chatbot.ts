@@ -17,7 +17,7 @@ export = {
             description: {
                 type: Sequelize.STRING
             },
-            container_mode: {
+            response_url: {
                 type: Sequelize.STRING
             },
             dialogflow_project_id: {
@@ -31,6 +31,9 @@ export = {
             },
             periodic_build: {
                 type: Sequelize.INTEGER
+            },
+            webhook_url: {
+                type: Sequelize.TEXT
             },
             companyId: {
                 type: Sequelize.INTEGER

@@ -11,48 +11,44 @@ import {
     HasOne,
     HasMany
   } from 'sequelize-typescript';
-  import Company from './company';
   import Test from './test';
   
   @Table({
-    tableName: "chatbot",
+    tableName: "assertion",
     paranoid: true,
     timestamps: true,
     underscored: true,
     charset: "utf8mb4"
   })
-  export default class Chatbot extends Model<Chatbot> {
-
+  export default class Assertion extends Model<Assertion> {
+  
     @PrimaryKey
     @AutoIncrement
     @Column
     id: number;
+
+    @Column
+    order: number;
   
     @Column
-    project_name: string;
-
+    userInput: string;
+  
     @Column
-    description: string;
-
+    chatbotResponse: string;
+  
     @Column
-    response_url: string;
-
+    intent: string;
+  
     @Column
-    periodic_build: number;
-
+    error: string;
+  
+    @ForeignKey(() => Test)
     @Column
-    webhook_url: string;
-
-    @HasMany(() => Test)
-    tests: Test[];
-
-    @ForeignKey(() => Company)
-    @Column
-    companyId: number;
-
-    @BelongsTo(() => Company)
-    company: Company;
-
+    testId: number;
+  
+    @BelongsTo(() => Test)
+    test: Test;
+  
     @CreatedAt
     created_at: Date;
   

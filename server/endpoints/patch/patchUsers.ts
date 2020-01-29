@@ -4,7 +4,7 @@ import * as bcrypt from "bcrypt";
 
 /**
 * Post users
-* url : http://localhost:8080/v1/users {"firstName": "Roger", "lastName": "Smith", "userName": "rsmith", "password": "toto123", "chatbotIds": 10, "companyId": 4}
+* url : http://localhost:8080/v1/users/:id {"firstName": "Roger", "lastName": "Smith", "userName": "rsmith", "password": "toto123", "chatbotIds": 10, "companyId": 4}
 */
 export default function patchUsers(req: Request, res: Response, next: NextFunction) {
     UserModel.findOne({

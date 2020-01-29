@@ -37,6 +37,9 @@ export default class Company extends Model<Company> {
   description: string;
 
   @Column
+  token: string;
+
+  @Column
   premium: boolean;
 
   @HasMany(() => Chatbot)

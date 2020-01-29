@@ -2,7 +2,7 @@ version: "3.5"
 
 services:
   test_my_chatbot_db:
-    container_name: "localhost:5430"
+    container_name: "localhost-5430"
     image: postgres
     environment:
       POSTGRES_DB: ${DB_NAME}
@@ -20,7 +20,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: "localhost:3002"
+    container_name: "localhost-3002"
     restart: on-failure
     environment:
       - NODE_ENV=development

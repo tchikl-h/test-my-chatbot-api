@@ -2,8 +2,8 @@ import { Request, Response, NextFunction } from "express";
 import TestModel from "../../models/test";
 
 /**
-* Post tests
-* url : http://localhost:8080/v1/tests {"name": "Test 1", "description": "description", "chatbotId": 10}
+* Patch tests
+* url : http://localhost:8080/v1/tests/:id {"name": "Test 1", "description": "description", "chatbotId": 10}
 */
 export default function postTests(req: Request, res: Response, next: NextFunction) {
     TestModel.findOne({
