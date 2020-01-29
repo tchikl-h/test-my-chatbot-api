@@ -3,14 +3,18 @@ import ChatbotModel from "../../models/chatbot";
 import axios from "axios";
 
 const io = require("socket.io-client");
-let socketio = io.connect(process.env.HOST_API);
 
 /**
 * Talk with the chatbot
 * url : http://localhost:8080/v1/companies/1/users/1/chatbots/1/talk {message: "Hello"}
 */
 export default function TalkChatbot(req: Request, res: Response, next: NextFunction) {
+    let socketio = io.connect(process.env.HOST_API);
+    socketio.on('connect', () => {
+        socketio.emit('room', req.params.chatbotId);
+    });
     socketio.emit('talk');
+    // console.log("---------------TALKCHATBOT---------------");
     ChatbotModel.findOne({
         where: {
             id: req.params.chatbotId,

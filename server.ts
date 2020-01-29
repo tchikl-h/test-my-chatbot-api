@@ -41,21 +41,28 @@ class App {
         });
 
         this.io.on('connect', (socket) => {
-            socket.on('message:test', (msg) => {
-                this.io.emit('message:test', msg);
-            })
-
-            socket.on('message:talk', (msg) => {
-                this.io.emit('message:talk', msg);
-            })
-
-            socket.on('test', (msg) => {
-                this.io.emit('test', msg);
-            })
-
-            socket.on('talk', (msg) => {
-                this.io.emit('talk', msg);
-            })
+            socket.on('room', (room) => {
+                socket.join(room, () => {
+                    // console.log("User joined on room "+room);
+                    socket.in(room).on('message:test', (msg) => {
+                        this.io.in(room).emit('message:test', msg);
+                    })
+        
+                    socket.in(room).on('message:talk', (msg) => {
+                        // console.log("---------------SERVERSOCKET MESSAGE:TALK RECEIVED---------------");
+                        this.io.in(room).emit('message:talk', msg);
+                    })
+        
+                    socket.in(room).on('test', (msg) => {
+                        this.io.in(room).emit('test', msg);
+                    })
+        
+                    socket.in(room).on('talk', (msg) => {
+                        // console.log("---------------SOCKETSERVER TALK RECEIVED---------------");
+                        this.io.in(room).emit('talk', msg);
+                    })
+                });
+            });
             // socket.on('user:request', () => {
             //   userCount++;
             //   socket.emit('user:accept', { id : userId, users : userCount });

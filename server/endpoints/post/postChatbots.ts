@@ -37,7 +37,7 @@ export default function postChatbots(req: Request, res: Response, next: NextFunc
         })
         .then((company: CompanyModel) => {
             ChatbotModel.update({
-                response_url: `${process.env.HOST_API}/companies/${req.body.companyId}/users/${req.body.userId}/chatbots/${chatbot.id}/response?token=${company.token}`,
+                response_url: `${process.env.HOST_API}/v1/companies/${req.body.companyId}/users/${req.body.userId}/chatbots/${chatbot.id}/response?token=${company.token}`,
                 date_update: new Date()
             }, {
                 where : {

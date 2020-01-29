@@ -9,7 +9,7 @@ let socketio;
 let i = 1;
 
 function launchAssertion(chatbot, res, test, data) {
-    console.log(data.userInput);
+    // console.log(data.userInput);
     let assertion = test.assertions.find(e => e.order === i)
     if (assertion && data.intent !== assertion.dataValues.intent) {
         // UPDATE ASSERTION

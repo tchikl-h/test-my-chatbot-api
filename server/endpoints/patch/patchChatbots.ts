@@ -24,6 +24,7 @@ export default function patchChatbots(req: Request, res: Response, next: NextFun
             project_name: req.body.projectName,
             description: req.body.description,
             webhook_url: req.body.webhook_url,
+            response_url: req.body.response_url,
             periodic_build: req.body.periodicBuild,
             companyId: parseInt(req.body.companyId),
             date_update: new Date()
